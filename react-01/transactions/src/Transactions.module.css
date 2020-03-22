@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");
+
+.transaction-history {
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.2;
+  width: 838px;
+  margin: 0 auto;
+  text-align: center;
+  border-collapse: collapse;
+}
+thead th {
+  background-color: #00bcd4;
+  color: #fff;
+  padding: 10px 0;
+  border: 1px solid #eaeaea;
+}
+td {
+  color: #727d87;
+  font-weight: 400;
+  padding: 10px 0;
+  border: 1px solid #eaeaea;
+}
+
+tr:nth-child(even) {
+  background-color: #eff0f2;
+}

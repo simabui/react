@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap");
+.friend-list {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 auto;
+  display: flex;
+  padding: 0;
+  flex-direction: column;
+  list-style-type: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  margin-bottom: 20px;
+  padding: 10px 0px 10px 20px;
+  -webkit-box-shadow: 0px 5px 19px -12px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 5px 19px -12px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 5px 19px -12px rgba(0, 0, 0, 0.75);
+}
+
+.status {
+  display: block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.online {
+  composes: status;
+  background-color: #0aa521;
+}
+.offline {
+  composes: status;
+  background-color: #e90000;
+}
+.name {
+  margin-left: 10px;
+}
+.avatar {
+  border-radius: 5px;
+}
