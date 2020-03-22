@@ -1,7 +1,19 @@
-import React, { Component, Fragment } from 'react';
-import ContactForm from './ContactForm';
-import ContactList from './ContactList';
-import Filter from './Filter';
+import React, { Component } from 'react';
+import styles from './App.module.css';
+import { getRequest } from '../services/services';
+import Seachbar from './searchbar/Searchbar';
+import ImageGallery from './imagegallery/ImageGallery';
+
+// edit incoming response
+function mapper(hits) {
+  return hits.map(({ id, webformatURL, largeImageURL }) => {
+    return {
+      id,
+      smallImg: webformatURL,
+      largeImg: largeImageURL,
+    };
+  });
+}
 
 class App extends Component {
   static propTypes = {};
@@ -9,89 +21,37 @@ class App extends Component {
   static defaultProps = {};
 
   state = {
-    contacts: [],
-    filter: '',
+    collection: [],
+    page: 1,
+    // error: null,
+    // isLoading: false,
   };
-  // render
 
-  componentDidMount() {
-    const contacts = localStorage.getItem('contacts');
-    if (contacts) {
-      this.setState({
-        contacts: [...JSON.parse(contacts)],
-      });
-    }
-  }
-  // update
-
-  componentDidUpdate(prevProp, prevState) {
-    if (prevState !== this.state) {
-      const { contacts } = this.state;
-      const strContacts = JSON.stringify(contacts);
-      localStorage.setItem('contacts', strContacts);
-    }
-  }
-
-  getFIlterValue = ({ target }) => {
-    const { value } = target;
-
+  handleRequest = async type => {
+    const { page } = this.state;
+    // axios request with query and page num
+    const response = await getRequest(type, page);
     this.setState({
-      filter: value,
+      collection: mapper(response.data.hits),
     });
   };
 
-  // filter by search
+  handleSubmit = e => {
+    e.preventDefault();
 
-  handleFilter = (collection, filterValue) => {
-    return collection.filter(({ name }) =>
-      name.toLowerCase().includes(filterValue.toLowerCase()),
-    );
-  };
-
-  handleContacts = obj => {
-    this.setState(state => {
-      return {
-        // update contact list
-        contacts: [...state.contacts, obj],
-      };
-    });
-  };
-
-  deleteContact = id => {
-    this.setState(state => {
-      return {
-        contacts: state.contacts.filter(contact => contact.id !== id),
-      };
-    });
-  };
-
-  // check if unique name in collection
-
-  handleUniqueName = name => {
-    const { contacts } = this.state;
-    const isUnique = contacts.some(contact => contact.name === name);
-    return isUnique;
+    const { search } = e.currentTarget.elements;
+    this.handleRequest(search.value);
   };
 
   render() {
-    const { contacts, filter } = this.state;
-    const filteredPhoneBook = this.handleFilter(contacts, filter);
-
+    const { collection } = this.state;
     return (
-      <Fragment>
-        <h1>Phonebook</h1>
-        <ContactForm
-          handleContacts={this.handleContacts}
-          onUnique={this.handleUniqueName}
-        />
-        <h2>Contacts</h2>
-        {contacts.length > 0 && <Filter getFIlterValue={this.getFIlterValue} />}
-        <ContactList
-          data={filteredPhoneBook}
-          onDeleteContact={this.deleteContact}
-        />
-      </Fragment>
+      <div className={styles.App}>
+        <Seachbar onSubmit={this.handleSubmit} />
+        <ImageGallery onRender={collection} />
+      </div>
     );
   }
 }
+
 export default App;
