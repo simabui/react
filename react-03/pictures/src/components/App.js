@@ -33,11 +33,8 @@ class App extends Component {
   async componentDidUpdate(prevProp, prevState) {
     const { query, page } = this.state;
     if (prevState.page < page) {
-      this.handleLoading(true);
-      const response = await getRequest(query, page);
-      this.updateCollection(response.data.hits);
-      this.handleLoading(false);
-      // scroll to bottom
+      this.handleRequest(query, page);
+      // scroll
       window.scrollTo({
         top: document.documentElement.scrollHeight,
         behavior: 'smooth',
@@ -50,9 +47,14 @@ class App extends Component {
     this.handleLoading(true);
     try {
       const response = await getRequest(type, page);
-      this.setState({
-        collection: mapper(response.data.hits),
+      this.setState(state => {
+        return {
+          collection: [...state.collection, ...mapper(response.data.hits)],
+        };
       });
+      // this.setState({
+      //   collection: mapper(response.data.hits),
+      // });
       this.handleLoading(false);
     } catch (error) {
       console.log(error.stack);
@@ -68,8 +70,10 @@ class App extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { search } = e.currentTarget.elements;
-    this.setState({ query: search.value, page: 1 });
-    // get images with page = 1
+
+    this.setState({ query: search.value });
+    this.reset();
+    // new response
     this.handleRequest(search.value, 1);
     window.scrollTo(0, 0);
   };
@@ -81,12 +85,8 @@ class App extends Component {
     });
   };
 
-  updateCollection = newData => {
-    this.setState(state => {
-      return {
-        collection: [...state.collection, ...mapper(newData)],
-      };
-    });
+  reset = () => {
+    this.setState({ collection: [], page: 1 });
   };
 
   render() {
