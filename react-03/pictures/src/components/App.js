@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Loader from 'react-loader-spinner';
 import styles from './App.module.css';
 import { getRequest } from '../services/services';
 import Seachbar from './searchbar/Searchbar';
@@ -26,22 +27,41 @@ class App extends Component {
     page: 1,
     query: '',
     // error: null,
-    // isLoading: false,
+    isLoading: false,
   };
 
   async componentDidUpdate(prevProp, prevState) {
     const { query, page } = this.state;
     if (prevState.page < page) {
+      this.handleLoading(true);
       const response = await getRequest(query, page);
       this.updateCollection(response.data.hits);
+      this.handleLoading(false);
+      // scroll to bottom
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth',
+      });
     }
   }
 
   // axios request with query and page num
   handleRequest = async (type, page) => {
-    const response = await getRequest(type, page);
+    this.handleLoading(true);
+    try {
+      const response = await getRequest(type, page);
+      this.setState({
+        collection: mapper(response.data.hits),
+      });
+      this.handleLoading(false);
+    } catch (error) {
+      console.log(error.stack);
+    }
+  };
+
+  handleLoading = bool => {
     this.setState({
-      collection: mapper(response.data.hits),
+      isLoading: bool,
     });
   };
 
@@ -54,6 +74,7 @@ class App extends Component {
     window.scrollTo(0, 0);
   };
 
+  // pagination
   handleClick = () => {
     this.setState(state => {
       return { page: state.page + 1 };
@@ -69,11 +90,19 @@ class App extends Component {
   };
 
   render() {
-    const { collection } = this.state;
+    const { collection, isLoading } = this.state;
     return (
       <div className={styles.App}>
         <Seachbar onSubmit={this.handleSubmit} />
         <ImageGallery onRender={collection} />
+        <Loader
+          visible={isLoading}
+          type="TailSpin"
+          color="#00BFFF"
+          height={100}
+          width={100}
+          className={styles.Loader}
+        />
         {collection.length > 1 && <Button onClick={this.handleClick} />}
       </div>
     );
