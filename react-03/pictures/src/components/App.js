@@ -6,6 +6,7 @@ import Seachbar from './searchbar/Searchbar';
 import ImageGallery from './imagegallery/ImageGallery';
 import Button from './button/Button';
 import Error from './error/Error';
+import Modal from './Modal/Modal';
 
 // edit incoming response
 function mapper(hits) {
@@ -29,6 +30,8 @@ class App extends Component {
     query: '',
     error: null,
     isLoading: false,
+    isOpen: false,
+    largeImg: '',
   };
 
   async componentDidUpdate(prevProp, prevState) {
@@ -87,12 +90,24 @@ class App extends Component {
     this.setState({ collection: [], page: 1 });
   };
 
+  // Modal
+  handleShowModal = e => {
+    const image = e.target.dataset.large;
+    const { isOpen } = this.state;
+    this.setState({
+      isOpen: !isOpen,
+      largeImg: image,
+    });
+  };
+
+  closeModal = () => this.setState({ isOpen: false });
+
   render() {
-    const { collection, isLoading, error } = this.state;
+    const { collection, isLoading, error, isOpen, largeImg } = this.state;
     return (
       <div className={styles.App}>
         <Seachbar onSubmit={this.handleSubmit} />
-        <ImageGallery onRender={collection} />
+        <ImageGallery onRender={collection} onShow={this.handleShowModal} />
         <Loader
           visible={isLoading}
           type="TailSpin"
@@ -103,6 +118,7 @@ class App extends Component {
         />
         {error && <Error text={error} />}
         {collection.length > 1 && <Button onClick={this.handleClick} />}
+        {isOpen && <Modal image={largeImg} onClose={this.closeModal} />}
       </div>
     );
   }
