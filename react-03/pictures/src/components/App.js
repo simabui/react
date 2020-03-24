@@ -34,12 +34,13 @@ class App extends Component {
   async componentDidUpdate(prevProp, prevState) {
     const { query, page } = this.state;
     if (prevState.page < page) {
-      this.handleRequest(query, page);
-      // scroll
-      window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: 'smooth',
+      this.handleRequest(query, page).then(() => {
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth',
+        });
       });
+      // scroll
     }
   }
 
