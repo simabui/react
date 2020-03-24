@@ -5,6 +5,7 @@ import { getRequest } from '../services/services';
 import Seachbar from './searchbar/Searchbar';
 import ImageGallery from './imagegallery/ImageGallery';
 import Button from './button/Button';
+import Error from './error/Error';
 
 // edit incoming response
 function mapper(hits) {
@@ -26,7 +27,7 @@ class App extends Component {
     collection: [],
     page: 1,
     query: '',
-    // error: null,
+    error: null,
     isLoading: false,
   };
 
@@ -52,13 +53,10 @@ class App extends Component {
           collection: [...state.collection, ...mapper(response.data.hits)],
         };
       });
-      // this.setState({
-      //   collection: mapper(response.data.hits),
-      // });
-      this.handleLoading(false);
     } catch (error) {
-      console.log(error.stack);
+      this.setState({ error: error.message });
     }
+    this.handleLoading(false);
   };
 
   handleLoading = bool => {
@@ -75,7 +73,6 @@ class App extends Component {
     this.reset();
     // new response
     this.handleRequest(search.value, 1);
-    window.scrollTo(0, 0);
   };
 
   // pagination
@@ -90,7 +87,7 @@ class App extends Component {
   };
 
   render() {
-    const { collection, isLoading } = this.state;
+    const { collection, isLoading, error } = this.state;
     return (
       <div className={styles.App}>
         <Seachbar onSubmit={this.handleSubmit} />
@@ -103,6 +100,7 @@ class App extends Component {
           width={100}
           className={styles.Loader}
         />
+        {error && <Error text={error} />}
         {collection.length > 1 && <Button onClick={this.handleClick} />}
       </div>
     );
