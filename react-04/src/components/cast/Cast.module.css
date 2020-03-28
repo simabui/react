@@ -1,0 +1,23 @@
+.actors {
+  padding: 0;
+  list-style-type: none;
+}
+
+.image {
+  width: 70px;
+  height: auto;
+}
+
+.actorName {
+  font-weight: 700;
+}
+
+.actorsList {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.actorText {
+  margin-left: 10px;
+}

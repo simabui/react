@@ -1,59 +1,65 @@
-/* eslint-disable camelcase */
-import React, { Fragment } from 'react';
+/* eslint-disable react/forbid-prop-types */
+import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, withRouter } from 'react-router-dom';
-import styles from './Movieitem.module.css';
 import Movielinks from '../movielinks/Movielinks';
+import MovieTemplate from './MovieTemplate';
 import Cast from '../cast/Cast';
 import Review from '../review/Review';
+import * as MOVIEAPI from '../../services/services';
 
-const MovieItem = ({
-  release_date,
-  original_title,
-  genres,
-  poster_path,
-  overview,
-  match,
-}) => {
-  // get year from string
-  const year = release_date.match(/([12]\d{3})/);
-  return (
-    <Fragment>
-      <div className={styles.movie}>
-        <img
-          src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-          alt="movie"
-          className={styles.movieImage}
-        />
-        <div className={styles.movieDetails}>
-          <h1>
-            {original_title}({year[0]})
-          </h1>
-          <h2>Overview</h2>
-          <p>{overview}</p>
-          <h2>Genres</h2>
-          <ul>
-            {genres.map(genre => (
-              <li key={genre.id}>{genre.name}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      {/* set path in links */}
-      <Movielinks path={match.url} />
-      {/* route to cast and reviews */}
-      <Route path={`${match.url}/cast`} component={Cast} />
-      <Route path={`${match.url}/reviews`} component={Review} />
-    </Fragment>
-  );
-};
+class MovieItem extends Component {
+  state = {
+    cast: null,
+    review: null,
+  };
 
-MovieItem.propTypes = {
-  original_title: PropTypes.string.isRequired,
-  genres: PropTypes.arrayOf(PropTypes.object).isRequired,
-  poster_path: PropTypes.string.isRequired,
-  overview: PropTypes.string.isRequired,
-  release_date: PropTypes.string.isRequired,
-  match: PropTypes.string.isRequired,
-};
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    id: PropTypes.number.isRequired,
+    history: PropTypes.object.isRequired,
+  };
+
+  async componentDidMount() {
+    const { id } = this.props;
+    const casts = await MOVIEAPI.getCast(id);
+    const reviews = await MOVIEAPI.getReview(id);
+    this.setState({
+      cast: casts.data.cast,
+      review: reviews.data.results,
+    });
+  }
+
+  // back to home page
+  handleGoHome = () => {
+    const { history } = this.props;
+    history.push('/');
+  };
+
+  render() {
+    const { match } = this.props;
+    const { cast, review } = this.state;
+    return (
+      <Fragment>
+        <MovieTemplate {...this.props} onHome={this.handleGoHome} />
+        {/* links */}
+        <Movielinks />
+        {/* route to cast and reviews */}
+        {cast && (
+          <Route
+            path={`${match.url}/cast`}
+            render={props => <Cast {...props} cast={cast} />}
+          />
+        )}
+        {review && (
+          <Route
+            path={`${match.url}/reviews`}
+            render={props => <Review {...props} review={review} />}
+          />
+        )}
+      </Fragment>
+    );
+  }
+}
+
 export default withRouter(MovieItem);

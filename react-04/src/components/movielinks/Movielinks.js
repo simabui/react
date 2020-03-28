@@ -1,14 +1,14 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import styles from './Movielinks.module.css';
 
-const Movielinks = ({ path }) => (
+const Movielinks = ({ match }) => (
   <ul className={styles.links}>
     <li>
       <NavLink
-        to={`${path}/cast`}
+        to={`${match.url}/cast`}
         className={styles.link}
         activeClassName={styles['active-link']}
       >
@@ -17,7 +17,7 @@ const Movielinks = ({ path }) => (
     </li>
     <li>
       <NavLink
-        to={`${path}/reviews`}
+        to={`${match.url}/reviews`}
         className={styles.link}
         activeClassName={styles['active-link']}
       >
@@ -28,7 +28,7 @@ const Movielinks = ({ path }) => (
 );
 
 Movielinks.propTypes = {
-  path: PropTypes.string.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
-export default Movielinks;
+export default withRouter(Movielinks);
