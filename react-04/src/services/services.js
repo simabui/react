@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-const KEY = '15109703-4df3afa39634f93d9eb19fc69';
-const URL = `https://pixabay.com/api?&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`;
+axios.defaults.baseURL = 'https://api.themoviedb.org/';
+const KEY = '1447587a69ffcd58f4a7dfca0fcab084';
 
 /* eslint-disable-next-line */
-export const getRequest = (query, page) =>
-  axios.get(`${URL}&q=${query}&page=${page}`);
+export const getTrending = () => axios.get(`3/trending/all/day?api_key=${KEY}`);
