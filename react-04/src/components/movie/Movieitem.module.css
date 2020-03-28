@@ -1,0 +1,13 @@
+.movie {
+  display: flex;
+  align-items: flex-start;
+}
+
+.movieDetails {
+  margin-left: 40px;
+  max-width: 650px;
+}
+
+.movieImage {
+  height: 500px;
+}
