@@ -1,5 +1,4 @@
 /* eslint-disable react/forbid-prop-types */
-// FIXME: fix copy pathes from cast and review
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, withRouter } from 'react-router-dom';
@@ -19,10 +18,12 @@ class MovieItem extends Component {
   // back to home page
   handleGoHome = () => {
     const { history, location } = this.props;
+    // back to previous page
     if (location.state) {
       history.push(location.state.from);
       return;
     }
+    // back to home
     history.push('/');
   };
 

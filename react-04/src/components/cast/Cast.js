@@ -5,6 +5,7 @@ import CastTemplate from './CastTemplate';
 import * as MOVIEAPI from '../../services/services';
 
 // const getID = props => props.location.pathname.match(/(\d+)/)[0];
+// FIXME: fix copy pathes from cast and review
 
 class Cast extends Component {
   state = {
@@ -16,7 +17,7 @@ class Cast extends Component {
       const { id } = this.props.location.state;
       this.updateState(id);
     }
-    // if without
+    // if without state
     // const id = getID(this.props);
     // this.updateState(id);
   }
