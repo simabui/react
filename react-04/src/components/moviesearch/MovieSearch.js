@@ -21,6 +21,7 @@ export default class MovieSearch extends Component {
   };
 
   async componentDidMount() {
+    // get parsed url search query
     const movie = parseString(this.props);
     if (movie) {
       const collection = await movieAPI.searchMovie(movie);

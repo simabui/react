@@ -10,6 +10,7 @@ const Movieslist = ({ movies, location }) => (
         <Link
           to={{
             pathname: `/movies/${movie.id}`,
+            // custom state
             state: { from: location },
           }}
         >

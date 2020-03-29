@@ -1,26 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './Reviews.module.css';
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
+import React, { Component, Fragment } from 'react';
+import ReviewTemplate from './ReviewTemplate';
+import * as MOVIEAPI from '../../services/services';
 
-const Review = ({ review }) => {
-  return review.length > 0 ? (
-    <ul>
-      {review.map(r => (
-        <li key={r.id}>
-          <div>
-            <p className={styles.author}>{r.author}</p>
-            <p>{r.content}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <p>no review</p>
-  );
-};
+class Review extends Component {
+  state = {
+    reviews: null,
+  };
 
-Review.propTypes = {
-  review: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
+  async componentDidMount() {
+    // get id from location.state
+    console.log(this.props);
+    console.log(this.state.reviews);
+    const { id } = this.props.location.state;
+    const collections = await MOVIEAPI.getReview(id);
+    this.setState({
+      reviews: collections.data.results,
+    });
+  }
+
+  render() {
+    const { reviews } = this.state;
+    return (
+      <Fragment>{reviews && <ReviewTemplate reviews={reviews} />}</Fragment>
+    );
+  }
+}
 
 export default Review;

@@ -4,11 +4,15 @@ import PropTypes from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
 import styles from './Movielinks.module.css';
 
-const Movielinks = ({ match }) => (
+const Movielinks = ({ match, location }) => (
   <ul className={styles.links}>
     <li>
       <NavLink
-        to={`${match.url}/cast`}
+        to={{
+          pathname: `${match.url}/cast`,
+          // custom state
+          state: { from: location, id: match.params.id },
+        }}
         className={styles.link}
         activeClassName={styles['active-link']}
       >
@@ -17,11 +21,15 @@ const Movielinks = ({ match }) => (
     </li>
     <li>
       <NavLink
-        to={`${match.url}/reviews`}
+        to={{
+          pathname: `${match.url}/reviews`,
+          // custom state
+          state: { from: location, id: match.params.id },
+        }}
         className={styles.link}
         activeClassName={styles['active-link']}
       >
-        Review
+        Reviews
       </NavLink>
     </li>
   </ul>
@@ -29,6 +37,7 @@ const Movielinks = ({ match }) => (
 
 Movielinks.propTypes = {
   match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default withRouter(Movielinks);

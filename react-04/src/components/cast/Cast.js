@@ -1,31 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './Cast.module.css';
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
+import React, { Component, Fragment } from 'react';
+import CastTemplate from './CastTemplate';
+import * as MOVIEAPI from '../../services/services';
 
-const Cast = ({ cast }) => {
-  return (
-    <ul className={styles.actors}>
-      {cast.map(actor => (
-        <li key={actor.id}>
-          <div className={styles.actorsList}>
-            <img
-              src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
-              alt="actor"
-              className={styles.image}
-            ></img>
-            <p className={styles.actorText}>
-              {actor.character} /{' '}
-              <span className={styles.actorName}>{actor.name}</span>
-            </p>
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
-};
+class Cast extends Component {
+  state = {
+    cast: null,
+  };
 
-Cast.propTypes = {
-  cast: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
+  async componentDidMount() {
+    const { id } = this.props.location.state;
+    const collection = await MOVIEAPI.getCast(id);
+    this.setState({
+      cast: collection.data.cast,
+    });
+  }
+
+  render() {
+    const { cast } = this.state;
+    return <Fragment>{cast && <CastTemplate cast={cast} />}</Fragment>;
+  }
+}
 
 export default Cast;
