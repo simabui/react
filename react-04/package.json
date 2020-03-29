@@ -8,6 +8,7 @@
     "classnames": "^2.2.6",
     "gh-pages": "^2.0.1",
     "indicative": "^7.4.4",
+    "query-string": "^6.11.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.1.2",

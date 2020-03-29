@@ -1,12 +1,18 @@
+/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-const Movieslist = ({ movies }) => (
+const Movieslist = ({ movies, location }) => (
   <ul>
     {movies.map(movie => (
       <li key={movie.id}>
-        <Link to={`movies/${movie.id}`}>
+        <Link
+          to={{
+            pathname: `/movies/${movie.id}`,
+            state: { from: location },
+          }}
+        >
           {movie.original_title ? movie.original_title : movie.name}
         </Link>
       </li>
@@ -16,6 +22,7 @@ const Movieslist = ({ movies }) => (
 
 Movieslist.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  location: PropTypes.object.isRequired,
 };
 
-export default Movieslist;
+export default withRouter(Movieslist);

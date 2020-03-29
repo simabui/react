@@ -17,7 +17,7 @@ const MovieTemplate = ({
     <Fragment>
       {/*  render movie details */}
       <button type="button" onClick={onHome} className={styles.button}>
-        ← Back to Home
+        ← Back
       </button>
       <div className={styles.movie}>
         <img
