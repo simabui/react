@@ -11,8 +11,6 @@ class Review extends Component {
 
   async componentDidMount() {
     // get id from location.state
-    console.log(this.props);
-    console.log(this.state.reviews);
     const { id } = this.props.location.state;
     const collections = await MOVIEAPI.getReview(id);
     this.setState({
