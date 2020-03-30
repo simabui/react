@@ -1,12 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import Loader from 'react-loader-spinner';
 import styles from './App.module.css';
-import { getRequest } from '../services/services';
+import getRequestDebounced from '../services/services';
 import Seachbar from './searchbar/Searchbar';
-import ImageGallery from './imagegallery/ImageGallery';
 import Button from './button/Button';
 import Error from './error/Error';
 import Modal from './Modal/Modal';
+
+// REACT lazy
+const AsyncImageGallery = lazy(() =>
+  import(/* webpackChunkName: "imageGallery" */ './imagegallery/ImageGallery'),
+);
 
 // edit incoming response
 function mapper(hits) {
@@ -34,7 +38,12 @@ class App extends Component {
     largeImg: '',
   };
 
-  async componentDidUpdate(prevProp, prevState) {
+  componentDidMount() {
+    this.handleRequest();
+  }
+
+  // render pagination
+  componentDidUpdate(prevProp, prevState) {
     const { query, page } = this.state;
     if (prevState.page < page) {
       this.handleRequest(query, page).then(() => {
@@ -51,13 +60,14 @@ class App extends Component {
   handleRequest = async (type, page) => {
     this.handleLoading(true);
     try {
-      const response = await getRequest(type, page);
+      const response = await getRequestDebounced(type, page);
       this.setState(state => {
         return {
           collection: [...state.collection, ...mapper(response.data.hits)],
         };
       });
     } catch (error) {
+      // send error to Error state
       this.setState({ error: error.message });
     }
     this.handleLoading(false);
@@ -107,7 +117,12 @@ class App extends Component {
     return (
       <div className={styles.App}>
         <Seachbar onSubmit={this.handleSubmit} />
-        <ImageGallery onRender={collection} onShow={this.handleShowModal} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <AsyncImageGallery
+            onRender={collection}
+            onShow={this.handleShowModal}
+          />
+        </Suspense>
         <Loader
           visible={isLoading}
           type="TailSpin"

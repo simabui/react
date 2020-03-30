@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ImageGallery.module.css';
-import ImageGalleryItem from '../imagegalleryitem/ImageGalleryItem';
+import ImageGalleryItem from './imagegalleryitem/ImageGalleryItem';
 
 const ImageGallery = ({ onRender, onShow }) => (
   <ul className={styles.ImageGallery}>
