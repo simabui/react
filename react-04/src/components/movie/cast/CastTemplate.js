@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Cast.module.css';
-import placeholder from '../../images/person-gray.jpg';
+import placeholder from '../../../images/person-gray.jpg';
 
 const CastTemplate = ({ cast }) => (
   <ul className={styles.actors}>
