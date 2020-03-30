@@ -1,12 +1,18 @@
 /* eslint-disable react/forbid-prop-types */
-import React, { Fragment, Component } from 'react';
+import React, { Fragment, Component, lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { Route, withRouter } from 'react-router-dom';
 import Movielinks from './movielinks/Movielinks';
 import MovieTemplate from './MovieTemplate';
-import Cast from './cast/Cast';
-import Review from './review/Review';
 import * as MOVIEAPI from '../../services/services';
+
+// REACT lazy
+const AsyncCast = lazy(() =>
+  import(/* webpackChunkName: "cast" */ './cast/Cast'),
+);
+const AsyncReview = lazy(() =>
+  import(/* webpackChunkName: "review" */ './review/Review'),
+);
 
 class MovieItem extends Component {
   state = {
@@ -52,18 +58,22 @@ class MovieItem extends Component {
         {/* links */}
         <Movielinks />
         {/* route to cast and reviews */}
-        {cast && (
-          <Route
-            path={`${match.url}/cast`}
-            render={props => <Cast {...props} cast={cast} />}
-          />
-        )}
-        {review && (
-          <Route
-            path={`${match.url}/reviews`}
-            render={props => <Review {...props} review={review} />}
-          />
-        )}
+        <Suspense fallback={<div>Cast loading...</div>}>
+          {cast && (
+            <Route
+              path={`${match.url}/cast`}
+              render={props => <AsyncCast {...props} cast={cast} />}
+            />
+          )}
+        </Suspense>
+        <Suspense fallback={<div>Review loading...</div>}>
+          {review && (
+            <Route
+              path={`${match.url}/reviews`}
+              render={props => <AsyncReview {...props} review={review} />}
+            />
+          )}
+        </Suspense>
       </Fragment>
     );
   }

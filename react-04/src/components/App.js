@@ -1,9 +1,17 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Home from './home/Home';
 import Navlink from './navlink/Navlink';
-import Movie from './movie/Movie';
-import MovieSearch from './moviesearch/MovieSearch';
+
+// REACT lazy
+const AsyncHome = lazy(() =>
+  import(/* webpackChunkName: "home" */ './home/Home'),
+);
+const AsyncMovie = lazy(() =>
+  import(/* webpackChunkName: "movie" */ './movie/Movie'),
+);
+const AsyncMovieSearch = lazy(() =>
+  import(/* webpackChunkName: "movieSearch" */ './moviesearch/MovieSearch'),
+);
 
 export default class App extends Component {
   state = {};
@@ -12,11 +20,13 @@ export default class App extends Component {
     return (
       <Fragment>
         <Navlink />
-        <Switch>
-          <Route path="/movies/:id" component={Movie} />
-          <Route path="/movies" component={MovieSearch} />
-          <Route path="/" component={Home} />
-        </Switch>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <Route path="/movies/:id" component={AsyncMovie} />
+            <Route path="/movies" component={AsyncMovieSearch} />
+            <Route path="/" component={AsyncHome} />
+          </Switch>
+        </Suspense>
       </Fragment>
     );
   }
