@@ -1,19 +1,40 @@
-import React from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
-import styles from './inputForm.module.css';
+
+const form = css`
+  display: flex;
+  align-items: center;
+`;
+
+const formButton = css`
+  font-weight: 700;
+  cursor: pointer;
+  margin-left: 10px;
+  background-color: #fff;
+  border: 1px solid #d2cfcf;
+  border-radius: 5px;
+`;
+const formInput = css`
+  width: 200px;
+  padding: 1px 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #d2cfcf;
+`;
 
 const InputForm = ({ onSearch }) => {
   return (
-    <form onSubmit={onSearch} className={styles.form}>
+    <form onSubmit={onSearch} css={form}>
       <input
         type="text"
         autoComplete="off"
         placeholder="Search movie"
         name="search"
         required
-        className={styles.formInput}
+        css={formInput}
       />
-      <button type="submit" className={styles.formButton}>
+      <button type="submit" css={formButton}>
         search
       </button>
     </form>

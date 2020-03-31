@@ -45,8 +45,12 @@ export default class MovieSearch extends Component {
       search: `search=${value}`,
     });
 
-    const collection = await movieAPI.searchMovie(value);
-    this.setState({ movies: collection.data.results });
+    try {
+      const collection = await movieAPI.searchMovie(value);
+      this.setState({ movies: collection.data.results });
+    } catch (err) {
+      this.setState({ error: err.response.data.status_message });
+    }
   };
 
   render() {

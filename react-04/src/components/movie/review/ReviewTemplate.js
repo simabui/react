@@ -1,6 +1,10 @@
-import React from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
-import styles from './Reviews.module.css';
+
+const author = css`
+  font-weight: 700;
+`;
 
 const ReviewTemplate = ({ reviews }) => (
   <ul>
@@ -8,7 +12,7 @@ const ReviewTemplate = ({ reviews }) => (
       reviews.map(r => (
         <li key={r.id}>
           <div>
-            <p className={styles.author}>{r.author}</p>
+            <p css={author}>{r.author}</p>
             <p>{r.content}</p>
           </div>
         </li>

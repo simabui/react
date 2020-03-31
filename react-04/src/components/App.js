@@ -1,4 +1,4 @@
-import React, { Component, Fragment, lazy, Suspense } from 'react';
+import React, { Fragment, lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Navlink from './navlink/Navlink';
 
@@ -13,21 +13,17 @@ const AsyncMovieSearch = lazy(() =>
   import(/* webpackChunkName: "movieSearch" */ './moviesearch/MovieSearch'),
 );
 
-export default class App extends Component {
-  state = {};
+const App = () => (
+  <Fragment>
+    <Navlink />
+    <Suspense fallback={<div>Loading...</div>}>
+      <Switch>
+        <Route path="/movies/:id" component={AsyncMovie} />
+        <Route path="/movies" component={AsyncMovieSearch} />
+        <Route path="/" component={AsyncHome} />
+      </Switch>
+    </Suspense>
+  </Fragment>
+);
 
-  render() {
-    return (
-      <Fragment>
-        <Navlink />
-        <Suspense fallback={<div>Loading...</div>}>
-          <Switch>
-            <Route path="/movies/:id" component={AsyncMovie} />
-            <Route path="/movies" component={AsyncMovieSearch} />
-            <Route path="/" component={AsyncHome} />
-          </Switch>
-        </Suspense>
-      </Fragment>
-    );
-  }
-}
+export default App;

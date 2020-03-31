@@ -1,7 +1,32 @@
 /* eslint-disable camelcase */
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
-import styles from './Movieitem.module.css';
+
+const movie = css`
+  display: flex;
+  align-items: flex-start;
+`;
+
+const movieDetails = css`
+  margin-left: 40px;
+  max-width: 650px;
+`;
+
+const movieImage = css`
+  height: 500px;
+`;
+
+const button = css`
+  margin-bottom: 10px;
+  cursor: pointer;
+  padding: 3px 10px;
+  background-color: #fff;
+  font-weight: 700;
+  border: 1px solid #d2cfcf;
+  border-radius: 5px;
+`;
 
 const MovieTemplate = ({
   release_date,
@@ -16,16 +41,16 @@ const MovieTemplate = ({
   return (
     <Fragment>
       {/*  render movie details */}
-      <button type="button" onClick={onHome} className={styles.button}>
+      <button type="button" onClick={onHome} css={button}>
         ← Back
       </button>
-      <div className={styles.movie}>
+      <div css={movie}>
         <img
           src={`https://image.tmdb.org/t/p/w500${poster_path}`}
           alt="poster"
-          className={styles.movieImage}
+          css={movieImage}
         />
-        <div className={styles.movieDetails}>
+        <div css={movieDetails}>
           <h1>
             {original_title}({year[0]})
           </h1>
