@@ -5,19 +5,25 @@ import Movieslist from '../movieslist/Movieslist';
 export default class Home extends Component {
   state = {
     movies: [],
+    error: null,
   };
 
   async componentDidMount() {
-    const request = await MOVIEAPI.getTrending();
-    this.setState({ movies: request.data.results });
+    try {
+      const request = await MOVIEAPI.getTrending();
+      this.setState({ movies: request.data.results });
+    } catch (error) {
+      this.setState({ error: error.response.data.status_message });
+    }
   }
 
   render() {
-    const { movies } = this.state;
+    const { movies, error } = this.state;
     return (
       <Fragment>
         <h1>Trending today</h1>
         <Movieslist movies={movies} />
+        {error && <p>{error}</p>}
       </Fragment>
     );
   }

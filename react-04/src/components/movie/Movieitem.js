@@ -18,6 +18,7 @@ class MovieItem extends Component {
   state = {
     cast: null,
     review: null,
+    error: null,
   };
 
   static propTypes = {
@@ -29,12 +30,16 @@ class MovieItem extends Component {
 
   async componentDidMount() {
     const { id } = this.props;
-    const casts = await MOVIEAPI.getCast(id);
-    const reviews = await MOVIEAPI.getReview(id);
-    this.setState({
-      cast: casts.data.cast,
-      review: reviews.data.results,
-    });
+    try {
+      const casts = await MOVIEAPI.getCast(id);
+      const reviews = await MOVIEAPI.getReview(id);
+      this.setState({
+        cast: casts.data.cast,
+        review: reviews.data.results,
+      });
+    } catch (err) {
+      this.setState({ error: err.response.data.status_message });
+    }
   }
 
   // back to home page
@@ -51,7 +56,7 @@ class MovieItem extends Component {
 
   render() {
     const { match } = this.props;
-    const { cast, review } = this.state;
+    const { cast, review, error } = this.state;
     return (
       <Fragment>
         <MovieTemplate {...this.props} onHome={this.handleGoHome} />
@@ -73,6 +78,7 @@ class MovieItem extends Component {
               render={props => <AsyncReview {...props} review={review} />}
             />
           )}
+          {error && <p>error</p>}
         </Suspense>
       </Fragment>
     );

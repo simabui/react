@@ -13,6 +13,7 @@ function parseString(props) {
 export default class MovieSearch extends Component {
   state = {
     movies: null,
+    error: null,
   };
 
   static propTypes = {
@@ -24,8 +25,12 @@ export default class MovieSearch extends Component {
     // get parsed url search query
     const movie = parseString(this.props);
     if (movie) {
-      const collection = await movieAPI.searchMovie(movie);
-      this.setState({ movies: collection.data.results });
+      try {
+        const collection = await movieAPI.searchMovie(movie);
+        this.setState({ movies: collection.data.results });
+      } catch (err) {
+        this.setState({ error: err.response.data.status_message });
+      }
     }
   }
 
@@ -45,11 +50,12 @@ export default class MovieSearch extends Component {
   };
 
   render() {
-    const { movies } = this.state;
+    const { movies, error } = this.state;
     return (
       <div>
         <InputForm onSearch={this.handleInput} />
         {movies && <Movieslist movies={movies} />}
+        {error && <p>{error}</p>}
       </div>
     );
   }

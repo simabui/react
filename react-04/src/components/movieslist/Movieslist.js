@@ -5,23 +5,19 @@ import { Link, withRouter } from 'react-router-dom';
 
 const Movieslist = ({ movies, location }) => (
   <ul>
-    {movies.length > 0 ? (
-      movies.map(movie => (
-        <li key={movie.id}>
-          <Link
-            to={{
-              pathname: `/movies/${movie.id}`,
-              // custom state
-              state: { from: location },
-            }}
-          >
-            {movie.original_title ? movie.original_title : movie.name}
-          </Link>
-        </li>
-      ))
-    ) : (
-      <p>No Results</p>
-    )}
+    {movies.map(movie => (
+      <li key={movie.id}>
+        <Link
+          to={{
+            pathname: `/movies/${movie.id}`,
+            // custom state
+            state: { from: location },
+          }}
+        >
+          {movie.original_title ? movie.original_title : movie.name}
+        </Link>
+      </li>
+    ))}
   </ul>
 );
 

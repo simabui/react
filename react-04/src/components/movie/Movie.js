@@ -9,19 +9,27 @@ function getParams(props) {
 export default class Movie extends Component {
   state = {
     movieDetails: null,
+    error: null,
   };
 
   async componentDidMount() {
     // get id from path and send request
     const id = getParams(this.props);
-    const movieDetails = await MOVIEAPI.getMovie(id);
-    this.setState({ movieDetails: movieDetails.data });
+    try {
+      const movieDetails = await MOVIEAPI.getMovie(id);
+      this.setState({ movieDetails: movieDetails.data });
+    } catch (err) {
+      this.setState({ error: err.response.data.status_message });
+    }
   }
 
   render() {
-    const { movieDetails } = this.state;
+    const { movieDetails, error } = this.state;
     return (
-      <Fragment>{movieDetails && <Movieitem {...movieDetails} />}</Fragment>
+      <Fragment>
+        {movieDetails && <Movieitem {...movieDetails} />}
+        {error && <p>error</p>}
+      </Fragment>
     );
   }
 }
