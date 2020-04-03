@@ -96,7 +96,7 @@ class App extends Component {
 
   // check if unique name in collection
 
-  handleUniqueName = name => {
+  handleDupName = name => {
     const { contacts } = this.state;
     const isUnique = contacts.some(contact => contact.name === name);
     return isUnique;
@@ -117,7 +117,7 @@ class App extends Component {
         </CSSTransition>
         <ContactForm
           handleContacts={this.handleContacts}
-          onUnique={this.handleUniqueName}
+          onUnique={this.handleDupName}
         />
         <h2>Contacts</h2>
 

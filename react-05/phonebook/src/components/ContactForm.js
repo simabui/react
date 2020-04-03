@@ -4,7 +4,10 @@ import { v4 as uuidv4 } from 'uuid';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { validateAll } from 'indicative/validator';
+import { CSSTransition } from 'react-transition-group';
 import Notification from './Notification';
+import ErrorDuplicate from './ErrorDuplicate';
+import SlideTransition from '../transitions/errorSlide.module.css';
 
 // css emotion
 const form = css`
@@ -68,6 +71,7 @@ export default class ContactForm extends Component {
     name: '',
     number: '',
     errors: null,
+    isDuplicate: false,
   };
 
   handleSubmit = e => {
@@ -78,7 +82,9 @@ export default class ContactForm extends Component {
     const { handleContacts, onUnique } = this.props;
     // validate unique name
     if (onUnique(name)) {
-      alert(`${name} is already in contacts`);
+      // set animation
+      this.setState({ isDuplicate: true });
+      setTimeout(this.exitAnimation, 3000);
       return;
     }
     // generate id
@@ -111,6 +117,10 @@ export default class ContactForm extends Component {
       });
   };
 
+  exitAnimation = () => {
+    this.setState({ isDuplicate: false });
+  };
+
   handleInput = e => {
     const { value, name } = e.target;
     this.setState({
@@ -123,13 +133,15 @@ export default class ContactForm extends Component {
       name: '',
       number: '',
       errors: null,
+      isDuplicate: false,
     });
   }
 
   render() {
-    const { name, number, errors } = this.state;
+    const { name, number, errors, isDuplicate } = this.state;
     const idName = uuidv4();
     const idPhone = uuidv4();
+
     return (
       <form onSubmit={this.handleSubmit} css={form}>
         <label htmlFor={idName} css={label}>
@@ -160,6 +172,14 @@ export default class ContactForm extends Component {
         <button type="submit" css={button}>
           Add contact
         </button>
+        <CSSTransition
+          in={isDuplicate}
+          timeout={300}
+          classNames={SlideTransition}
+          unmountOnExit
+        >
+          <ErrorDuplicate />
+        </CSSTransition>
       </form>
     );
   }
