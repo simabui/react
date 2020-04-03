@@ -15,6 +15,10 @@ li {
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 400px;
   margin: 0 auto;
+}
+
+p {
+  margin: 0;
 }

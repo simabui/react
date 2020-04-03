@@ -1,41 +1,69 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import slideTransition from '../transitions/slide.module.css';
 
 const item = css`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 15px 8px;
+`;
+
+const itemName = css`
+  flex-grow: 2;
+`;
+const itemNumber = css`
+  flex-grow: 1;
 `;
 
 const button = css`
-  margin-left: 15px;
-  padding: 4px 10px;
+  padding: 4px;
+  max-width: 40px;
   font-size: 16px;
   cursor: pointer;
   background-color: #fff;
   border-radius: 5px;
+  flex-grow: 1;
+  background-color: #ff0000;
+  color: #fff;
+  font-weight: 700;
 `;
 const list = css`
   margin-top: 10px;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+  box-shadow: 0px 3px 8px -2px rgba(0, 0, 0, 0.75);
 `;
-
+const lists = css`
+  list-style-type: none;
+  padding: 0;
+`;
 const ContactList = ({ data, onDeleteContact }) => (
-  <ul>
+  <TransitionGroup component="ul" css={lists}>
     {data.map(contact => (
-      <li key={contact.id} css={list}>
-        <div css={item}>
-          {contact.name}: {contact.number}
-          <button
-            type="button"
-            onClick={() => onDeleteContact(contact.id)}
-            css={button}
-          >
-            delete contact
-          </button>
-        </div>
-      </li>
+      <CSSTransition
+        key={contact.id}
+        timeout={500}
+        classNames={slideTransition}
+      >
+        <li css={list}>
+          <div css={item}>
+            <p css={itemName}>{contact.name}</p>
+            <p css={itemNumber}>{contact.number}</p>
+            <button
+              type="button"
+              onClick={() => onDeleteContact(contact.id)}
+              css={button}
+            >
+              ✕
+            </button>
+          </div>
+        </li>
+      </CSSTransition>
     ))}
-  </ul>
+  </TransitionGroup>
 );
 
 ContactList.defaultProps = {

@@ -8,8 +8,11 @@ import Notification from './Notification';
 
 // css emotion
 const form = css`
+  padding: 10px;
   display: flex;
   flex-direction: column;
+  box-shadow: 0px 3px 8px -2px rgba(0, 0, 0, 0.75);
+  border-radius: 5px;
 `;
 const button = css`
   width: 150px;
@@ -18,12 +21,23 @@ const button = css`
   background-color: #fff;
   border-radius: 5px;
   padding: 3px;
+  width: 100%;
+  background-color: #3944a8;
+  color: #fff;
+  padding: 10px 0;
+  font-weight: 700;
 `;
 const label = css`
   margin-bottom: 10px;
+  padding: 5px;
 `;
 const input = css`
-  margin-left: 5px;
+  width: 100%;
+  padding: 10px 0 10px 5px;
+  border-radius: 5px;
+  border: 1px solid #dedede;
+  margin-top: 5px;
+  font-size: 16px;
 `;
 const inputNUmber = css`
   &::-webkit-inner-spin-button,

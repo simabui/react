@@ -6,6 +6,7 @@ import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
 import slideTransition from '../transitions/slide.module.css';
+import PopTransition from '../transitions/pop.module.css';
 
 const title = css`
   color: #3944a8;
@@ -20,24 +21,31 @@ class App extends Component {
     contacts: [],
     filter: '',
     isShown: false,
+    filterShown: false,
   };
   // render
 
   componentDidMount() {
-    const contacts = localStorage.getItem('contacts');
-    if (contacts) {
+    const contactsLocal = localStorage.getItem('contacts');
+    if (contactsLocal) {
       this.setState({
-        contacts: [...JSON.parse(contacts)],
+        contacts: [...JSON.parse(contactsLocal)],
       });
+      // animate filter
+      const contactsParsed = JSON.parse(contactsLocal);
+
+      if (contactsParsed.length > 1) {
+        this.toggleFilter();
+      }
     }
     // animate title
     this.setState(state => ({ isShown: !state.isShown }));
   }
-  // update
 
   componentDidUpdate(prevProp, prevState) {
-    if (prevState !== this.state) {
-      const { contacts } = this.state;
+    // update local
+    const { contacts } = this.state;
+    if (prevState.contacts !== contacts) {
       const strContacts = JSON.stringify(contacts);
       localStorage.setItem('contacts', strContacts);
     }
@@ -52,7 +60,6 @@ class App extends Component {
   };
 
   // filter by search
-
   handleFilter = (collection, filterValue) => {
     return collection.filter(({ name }) =>
       name.toLowerCase().includes(filterValue.toLowerCase()),
@@ -66,6 +73,12 @@ class App extends Component {
         contacts: [...state.contacts, obj],
       };
     });
+
+    // animate filter
+    const { contacts, filterShown } = this.state;
+    if (filterShown !== true && contacts.length > 1) {
+      this.toggleFilter();
+    }
   };
 
   deleteContact = id => {
@@ -74,6 +87,11 @@ class App extends Component {
         contacts: state.contacts.filter(contact => contact.id !== id),
       };
     });
+
+    const { contacts } = this.state;
+    if (contacts.length < 3) {
+      this.toggleFilter();
+    }
   };
 
   // check if unique name in collection
@@ -84,13 +102,17 @@ class App extends Component {
     return isUnique;
   };
 
+  toggleFilter() {
+    this.setState(state => ({ filterShown: !state.filterShown }));
+  }
+
   render() {
-    const { contacts, filter, isShown } = this.state;
+    const { contacts, filter, isShown, filterShown } = this.state;
     const filteredPhoneBook = this.handleFilter(contacts, filter);
 
     return (
       <Fragment>
-        <CSSTransition in={isShown} timeout={2000} classNames={slideTransition}>
+        <CSSTransition in={isShown} timeout={500} classNames={slideTransition}>
           <h1 css={title}>Phonebook</h1>
         </CSSTransition>
         <ContactForm
@@ -98,7 +120,16 @@ class App extends Component {
           onUnique={this.handleUniqueName}
         />
         <h2>Contacts</h2>
-        {contacts.length > 0 && <Filter getFIlterValue={this.getFIlterValue} />}
+
+        <CSSTransition
+          in={filterShown}
+          timeout={300}
+          classNames={PopTransition}
+          unmountOnExit
+        >
+          <Filter getFIlterValue={this.getFIlterValue} />
+        </CSSTransition>
+
         <ContactList
           data={filteredPhoneBook}
           onDeleteContact={this.deleteContact}
