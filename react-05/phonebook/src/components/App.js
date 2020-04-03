@@ -1,7 +1,15 @@
-import React, { Component, Fragment } from 'react';
+import { Component, Fragment } from 'react';
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core';
+import { CSSTransition } from 'react-transition-group';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
+import slideTransition from '../transitions/slide.module.css';
+
+const title = css`
+  color: #3944a8;
+`;
 
 class App extends Component {
   static propTypes = {};
@@ -11,6 +19,7 @@ class App extends Component {
   state = {
     contacts: [],
     filter: '',
+    isShown: false,
   };
   // render
 
@@ -21,6 +30,8 @@ class App extends Component {
         contacts: [...JSON.parse(contacts)],
       });
     }
+    // animate title
+    this.setState(state => ({ isShown: !state.isShown }));
   }
   // update
 
@@ -74,12 +85,14 @@ class App extends Component {
   };
 
   render() {
-    const { contacts, filter } = this.state;
+    const { contacts, filter, isShown } = this.state;
     const filteredPhoneBook = this.handleFilter(contacts, filter);
 
     return (
       <Fragment>
-        <h1>Phonebook</h1>
+        <CSSTransition in={isShown} timeout={2000} classNames={slideTransition}>
+          <h1 css={title}>Phonebook</h1>
+        </CSSTransition>
         <ContactForm
           handleContacts={this.handleContacts}
           onUnique={this.handleUniqueName}
