@@ -64,7 +64,7 @@ const messages = {
 export default class ContactForm extends Component {
   static propTypes = {
     handleContacts: PropTypes.func.isRequired,
-    onUnique: PropTypes.func.isRequired,
+    onDuplicate: PropTypes.func.isRequired,
   };
 
   state = {
@@ -79,9 +79,9 @@ export default class ContactForm extends Component {
     // recieve state name
     const { name, number } = this.state;
     // update parent state
-    const { handleContacts, onUnique } = this.props;
+    const { handleContacts, onDuplicate } = this.props;
     // validate unique name
-    if (onUnique(name)) {
+    if (onDuplicate(name)) {
       // set animation
       this.setState({ isDuplicate: true });
       setTimeout(this.exitAnimation, 3000);

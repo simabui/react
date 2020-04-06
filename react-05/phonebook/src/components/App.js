@@ -1,7 +1,7 @@
 import { Component, Fragment } from 'react';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
 import Filter from './Filter';
@@ -21,7 +21,6 @@ class App extends Component {
     contacts: [],
     filter: '',
     isShown: false,
-    filterShown: false,
   };
   // render
 
@@ -31,12 +30,6 @@ class App extends Component {
       this.setState({
         contacts: [...JSON.parse(contactsLocal)],
       });
-      // animate filter
-      const contactsParsed = JSON.parse(contactsLocal);
-
-      if (contactsParsed.length > 1) {
-        this.toggleFilter();
-      }
     }
     // animate title
     this.setState(state => ({ isShown: !state.isShown }));
@@ -73,12 +66,6 @@ class App extends Component {
         contacts: [...state.contacts, obj],
       };
     });
-
-    // animate filter
-    const { contacts, filterShown } = this.state;
-    if (filterShown !== true && contacts.length > 1) {
-      this.toggleFilter();
-    }
   };
 
   deleteContact = id => {
@@ -87,11 +74,6 @@ class App extends Component {
         contacts: state.contacts.filter(contact => contact.id !== id),
       };
     });
-
-    const { contacts } = this.state;
-    if (contacts.length < 3) {
-      this.toggleFilter();
-    }
   };
 
   // check if unique name in collection
@@ -102,12 +84,8 @@ class App extends Component {
     return isUnique;
   };
 
-  toggleFilter() {
-    this.setState(state => ({ filterShown: !state.filterShown }));
-  }
-
   render() {
-    const { contacts, filter, isShown, filterShown } = this.state;
+    const { contacts, filter, isShown } = this.state;
     const filteredPhoneBook = this.handleFilter(contacts, filter);
 
     return (
@@ -117,18 +95,16 @@ class App extends Component {
         </CSSTransition>
         <ContactForm
           handleContacts={this.handleContacts}
-          onUnique={this.handleDupName}
+          onDuplicate={this.handleDupName}
         />
         <h2>Contacts</h2>
-
-        <CSSTransition
-          in={filterShown}
-          timeout={300}
-          classNames={PopTransition}
-          unmountOnExit
-        >
-          <Filter getFIlterValue={this.getFIlterValue} />
-        </CSSTransition>
+        <TransitionGroup>
+          {contacts.length > 1 && (
+            <CSSTransition timeout={300} classNames={PopTransition}>
+              <Filter getFIlterValue={this.getFIlterValue} />
+            </CSSTransition>
+          )}
+        </TransitionGroup>
 
         <ContactList
           data={filteredPhoneBook}
