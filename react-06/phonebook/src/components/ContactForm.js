@@ -97,10 +97,12 @@ export default class ContactForm extends Component {
     validateAll(data, rules, messages)
       .then(d => {
         // render if validated
-        handleContacts({
-          ...d,
-          id,
-        });
+        handleContacts([
+          {
+            ...d,
+            id,
+          },
+        ]);
         // reset
         this.reset();
       })

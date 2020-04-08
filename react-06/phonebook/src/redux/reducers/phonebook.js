@@ -1,9 +1,7 @@
 import { TYPE } from '../actions/phonebook';
 
-// FIXME:  type filter
 export default function collectionUpdate(
   state = {
-    // base states
     collection: [],
     filter: '',
   },
@@ -11,7 +9,22 @@ export default function collectionUpdate(
 ) {
   switch (action.type) {
     case TYPE.update: {
-      return [...state.collection, action.payload];
+      // return new object with updated collection
+      return { ...state, collection: [...state.collection, ...action.payload] };
+    }
+
+    case TYPE.filter: {
+      // return new object with updated collection
+      return { ...state, filter: action.payload };
+    }
+
+    case TYPE.delete: {
+      return {
+        ...state,
+        collection: [
+          ...state.collection.filter(contact => contact.id !== action.payload),
+        ],
+      };
     }
 
     default:
