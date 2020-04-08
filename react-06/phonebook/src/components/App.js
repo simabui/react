@@ -100,11 +100,11 @@ class App extends Component {
         />
         <h2>Contacts</h2>
         <TransitionGroup>
-          {contacts.length > 1 && (
+          {contacts && contacts.length > 1 ? (
             <CSSTransition timeout={300} classNames={PopTransition}>
               <Filter getFIlterValue={this.getFIlterValue} />
             </CSSTransition>
-          )}
+          ) : null}
         </TransitionGroup>
 
         <ContactList

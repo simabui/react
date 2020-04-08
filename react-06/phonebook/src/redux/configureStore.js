@@ -1,15 +1,11 @@
 import { createStore } from 'redux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
-// create base store
+import rootReducer from './reducers/combineReducers';
 
-export default function configureStore(reducers) {
+// create base store
+function configureStore(reducers) {
   // add extention as 3rd parameter
-  return createStore(
-    reducers,
-    {
-      collection: [],
-      filter: '',
-    },
-    devToolsEnhancer(),
-  );
+  return createStore(reducers, devToolsEnhancer());
 }
+
+export default configureStore(rootReducer);
