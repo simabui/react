@@ -7,12 +7,8 @@ export const TYPE = {
 export function updateCollection(users) {
   return {
     type: TYPE.update,
-    // updat obj user
-    payload: users.map(user => ({
-      name: user.name,
-      number: user.number,
-      id: user.id,
-    })),
+    // update arr of objs
+    payload: users,
   };
 }
 

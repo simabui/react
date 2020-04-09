@@ -117,7 +117,10 @@ class App extends Component {
 }
 // redux
 const mapStateToProps = state => {
-  return { contacts: state.collection, filter: state.filter };
+  return {
+    contacts: state.phonebook.collection,
+    filter: state.phonebook.filter,
+  };
 };
 const mapDispatchToProps = dispatch => {
   return {

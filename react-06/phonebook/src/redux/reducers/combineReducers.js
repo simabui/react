@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux';
-import collectionReducers from './collection';
-import filterReducers from './filter';
+import collectionReducers from './phonebook';
 
 // store object
 const rootReducer = combineReducers({
-  collection: collectionReducers,
-  filter: filterReducers,
+  phonebook: collectionReducers,
 });
 
 export default rootReducer;
