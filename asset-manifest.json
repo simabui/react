@@ -1,13 +1,13 @@
 {
-  "main.css": "/simabui/friendlist/static/css/main.a59fc81c.chunk.css",
-  "main.js": "/simabui/friendlist/static/js/main.e6e39416.chunk.js",
-  "main.js.map": "/simabui/friendlist/static/js/main.e6e39416.chunk.js.map",
-  "runtime~main.js": "/simabui/friendlist/static/js/runtime~main.9a9427ae.js",
-  "runtime~main.js.map": "/simabui/friendlist/static/js/runtime~main.9a9427ae.js.map",
-  "static/js/2.f9d42e77.chunk.js": "/simabui/friendlist/static/js/2.f9d42e77.chunk.js",
-  "static/js/2.f9d42e77.chunk.js.map": "/simabui/friendlist/static/js/2.f9d42e77.chunk.js.map",
-  "index.html": "/simabui/friendlist/index.html",
-  "precache-manifest.ea85a3969c0bb09496a111f65e0be687.js": "/simabui/friendlist/precache-manifest.ea85a3969c0bb09496a111f65e0be687.js",
-  "service-worker.js": "/simabui/friendlist/service-worker.js",
-  "static/css/main.a59fc81c.chunk.css.map": "/simabui/friendlist/static/css/main.a59fc81c.chunk.css.map"
+  "main.css": "/friendlist/static/css/main.a59fc81c.chunk.css",
+  "main.js": "/friendlist/static/js/main.e6e39416.chunk.js",
+  "main.js.map": "/friendlist/static/js/main.e6e39416.chunk.js.map",
+  "runtime~main.js": "/friendlist/static/js/runtime~main.a8ff8772.js",
+  "runtime~main.js.map": "/friendlist/static/js/runtime~main.a8ff8772.js.map",
+  "static/js/2.f9d42e77.chunk.js": "/friendlist/static/js/2.f9d42e77.chunk.js",
+  "static/js/2.f9d42e77.chunk.js.map": "/friendlist/static/js/2.f9d42e77.chunk.js.map",
+  "index.html": "/friendlist/index.html",
+  "precache-manifest.4e90852984be609087fb113e985839cf.js": "/friendlist/precache-manifest.4e90852984be609087fb113e985839cf.js",
+  "service-worker.js": "/friendlist/service-worker.js",
+  "static/css/main.a59fc81c.chunk.css.map": "/friendlist/static/css/main.a59fc81c.chunk.css.map"
 }
