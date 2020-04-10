@@ -3,13 +3,16 @@ import { TYPE } from '../actions/phonebook';
 
 function collectionReducer(state = [], action) {
   switch (action.type) {
-    case TYPE.update: {
-      // return new object with updated collection
-      return [...state, ...action.payload];
+    case TYPE.getSuccess: {
+      return [...action.payload.users];
     }
 
-    case TYPE.delete: {
-      return [...state.filter(contact => contact.id !== action.payload)];
+    case TYPE.updateSuccess: {
+      return [...state, action.payload.user];
+    }
+
+    case TYPE.deleteSuccess: {
+      return [...state.filter(contact => contact.id !== action.payload.id)];
     }
 
     default:
@@ -21,7 +24,7 @@ function filterReducer(state = '', action) {
   switch (action.type) {
     case TYPE.filter: {
       // return new object with updated collection
-      return action.payload;
+      return action.payload.text;
     }
 
     default:
@@ -29,10 +32,23 @@ function filterReducer(state = '', action) {
   }
 }
 
+function errorReducer(state = null, action) {
+  switch (action.type) {
+    case TYPE.getFail:
+    case TYPE.updateFail:
+    case TYPE.deleteFail: {
+      return action.payload.error;
+    }
+
+    default:
+      return state;
+  }
+}
 // create store states inside phonebook store
 const collectionReducers = combineReducers({
   collection: collectionReducer,
   filter: filterReducer,
+  error: errorReducer,
 });
 
 export default collectionReducers;

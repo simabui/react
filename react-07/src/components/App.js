@@ -10,6 +10,7 @@ import Filter from './Filter';
 import slideTransition from '../transitions/slide.module.css';
 import PopTransition from '../transitions/pop.module.css';
 import * as ACTIONS from '../redux/actions/phonebook';
+import { fetchData, putData, deleteData } from '../redux/operations/operation';
 
 const title = css`
   color: #3944a8;
@@ -17,12 +18,13 @@ const title = css`
 
 class App extends Component {
   static propTypes = {
-    updateCollection: PropTypes.func.isRequired,
+    fetchContacts: PropTypes.func.isRequired,
+    putContact: PropTypes.func.isRequired,
     inputFilter: PropTypes.func.isRequired,
     deleteUser: PropTypes.func.isRequired,
     contacts: PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.string,
+        id: PropTypes.number,
         number: PropTypes.string,
         name: PropTypes.strings,
       }),
@@ -38,23 +40,11 @@ class App extends Component {
   // render
 
   componentDidMount() {
-    const contactsLocal = localStorage.getItem('contacts');
-    if (contactsLocal) {
-      // render from prop
-      const { updateCollection } = this.props;
-      updateCollection(JSON.parse(contactsLocal));
-    }
+    const { fetchContacts } = this.props;
+    fetchContacts();
+
     // animate title
     this.setState(state => ({ isShown: !state.isShown }));
-  }
-
-  componentDidUpdate(prevProp) {
-    // update local
-    const { contacts } = this.props;
-    if (prevProp.contacts !== contacts) {
-      const strContacts = JSON.stringify(contacts);
-      localStorage.setItem('contacts', strContacts);
-    }
   }
 
   getFIlterValue = ({ target }) => {
@@ -86,7 +76,7 @@ class App extends Component {
 
   render() {
     const { isShown } = this.state;
-    const { updateCollection, contacts, filter } = this.props;
+    const { putContact, contacts, filter } = this.props;
     const filteredPhoneBook = this.handleFilter(contacts, filter);
     return (
       <Fragment>
@@ -95,7 +85,7 @@ class App extends Component {
         </CSSTransition>
         <ContactForm
           // handleContacts={this.handleContacts}
-          handleContacts={updateCollection}
+          handleContacts={putContact}
           onDuplicate={this.handleDupName}
         />
         <h2>Contacts</h2>
@@ -122,11 +112,13 @@ const mapStateToProps = state => {
     filter: state.phonebook.filter,
   };
 };
+
 const mapDispatchToProps = dispatch => {
   return {
-    updateCollection: user => dispatch(ACTIONS.updateCollection(user)),
+    fetchContacts: () => dispatch(fetchData()),
+    putContact: contact => dispatch(putData(contact)),
+    deleteUser: id => dispatch(deleteData(id)),
     inputFilter: input => dispatch(ACTIONS.filterCollection(input)),
-    deleteUser: name => dispatch(ACTIONS.deleteUser(name)),
   };
 };
 

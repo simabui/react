@@ -87,8 +87,6 @@ export default class ContactForm extends Component {
       setTimeout(this.exitAnimation, 3000);
       return;
     }
-    // generate id
-    const id = uuidv4();
     const data = {
       name,
       number,
@@ -97,12 +95,9 @@ export default class ContactForm extends Component {
     validateAll(data, rules, messages)
       .then(d => {
         // render if validated
-        handleContacts([
-          {
-            ...d,
-            id,
-          },
-        ]);
+        handleContacts({
+          ...d,
+        });
         // reset
         this.reset();
       })
