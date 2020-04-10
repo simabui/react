@@ -1,5 +1,6 @@
 {
   "name": "profile",
+  "homepage": "https://simabui.github.io/profile",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -18,7 +19,7 @@
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint src/**/*.js --fix",
     "lint:format": "prettier src/**/*.{js,css,json} --write",
-    "predeploy": "yarn build",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
