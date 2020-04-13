@@ -24,13 +24,14 @@ function mapper(hits) {
 }
 
 class App extends Component {
+  page = 1;
+
   static propTypes = {};
 
   static defaultProps = {};
 
   state = {
     collection: [],
-    page: 1,
     query: '',
     error: null,
     isLoading: false,
@@ -42,17 +43,11 @@ class App extends Component {
     this.handleRequest();
   }
 
-  // render pagination
+  // rerequest on new query
   componentDidUpdate(prevProp, prevState) {
-    const { query, page } = this.state;
-    if (prevState.page < page) {
-      this.handleRequest(query, page).then(() => {
-        window.scrollTo({
-          top: document.documentElement.scrollHeight,
-          behavior: 'smooth',
-        });
-      });
-      // scroll
+    const { query } = this.state;
+    if (prevState.query !== query) {
+      this.handleRequest(query, this.page);
     }
   }
 
@@ -91,22 +86,27 @@ class App extends Component {
 
   // pagination
   handleClick = () => {
-    this.setState(state => {
-      return { page: state.page + 1 };
+    this.page += 1;
+    const { query } = this.state;
+    this.handleRequest(query, this.page).then(() => {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: 'smooth',
+      });
     });
   };
 
   reset = () => {
-    this.setState({ collection: [], page: 1 });
+    this.page = 1;
+    this.setState({ collection: [] });
   };
 
   // Modal
-  handleShowModal = e => {
-    const image = e.target.dataset.large;
+  handleShowModal = largeImg => {
     const { isOpen } = this.state;
     this.setState({
       isOpen: !isOpen,
-      largeImg: image,
+      largeImg,
     });
   };
 
@@ -117,7 +117,7 @@ class App extends Component {
     return (
       <div className={styles.App}>
         <Seachbar onSubmit={this.handleSubmit} />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<></>}>
           <AsyncImageGallery
             onRender={collection}
             onShow={this.handleShowModal}

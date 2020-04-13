@@ -9,7 +9,7 @@ const ImageGallery = ({ onRender, onShow }) => (
       <ImageGalleryItem
         small={image.smallImg}
         key={image.id}
-        data={image.largeImg}
+        largeImg={image.largeImg}
         onShow={onShow}
       />
     ))}
