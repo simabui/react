@@ -9,7 +9,8 @@ import ContactList from './ContactList';
 import Filter from './Filter';
 import slideTransition from '../transitions/slide.module.css';
 import PopTransition from '../transitions/pop.module.css';
-import * as ACTIONS from '../redux/actions/phonebook';
+import * as ACTIONS from '../redux/phonebook/phonebookActions';
+import { getFilterValue, getContacts } from '../redux/phonebook/phoneSelectors';
 
 const title = css`
   color: #3944a8;
@@ -118,8 +119,8 @@ class App extends Component {
 // redux
 const mapStateToProps = state => {
   return {
-    contacts: state.phonebook.collection,
-    filter: state.phonebook.filter,
+    contacts: getContacts(state),
+    filter: getFilterValue(state),
   };
 };
 const mapDispatchToProps = dispatch => {
