@@ -1,7 +1,6 @@
-import { combineReducers } from 'redux';
-import { TYPE } from '../actions/phonebook';
+import { TYPE } from './phonebookActions';
 
-function collectionReducer(state = [], action) {
+export function collectionReducer(state = [], action) {
   switch (action.type) {
     case TYPE.getSuccess: {
       return [...action.payload.users];
@@ -20,7 +19,7 @@ function collectionReducer(state = [], action) {
   }
 }
 
-function filterReducer(state = '', action) {
+export function filterReducer(state = '', action) {
   switch (action.type) {
     case TYPE.filter: {
       // return new object with updated collection
@@ -32,7 +31,7 @@ function filterReducer(state = '', action) {
   }
 }
 
-function errorReducer(state = null, action) {
+export function errorReducer(state = null, action) {
   switch (action.type) {
     case TYPE.getFail:
     case TYPE.updateFail:
@@ -44,11 +43,3 @@ function errorReducer(state = null, action) {
       return state;
   }
 }
-// create store states inside phonebook store
-const collectionReducers = combineReducers({
-  collection: collectionReducer,
-  filter: filterReducer,
-  error: errorReducer,
-});
-
-export default collectionReducers;
