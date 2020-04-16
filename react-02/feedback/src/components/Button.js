@@ -14,10 +14,10 @@ const button = css`
   color: #fff;
 `;
 
-const Button = ({ type = 'placeholder', callback, className }) => {
+const Button = ({ children = 'placeholder', callback, className }) => {
   return (
     <button css={button} type="button" onClick={callback} className={className}>
-      {type}
+      {children}
     </button>
   );
 };
@@ -26,7 +26,7 @@ Button.defaultProps = {
   className: '',
 };
 Button.propTypes = {
-  type: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
   callback: PropTypes.func.isRequired,
   className: PropTypes.string,
 };

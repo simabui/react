@@ -33,10 +33,6 @@ const negative = css`
   background-color: #ff0000;
 `;
 class App extends Component {
-  static propTypes = {};
-
-  static defaultProps = {};
-
   state = {
     good: 0,
     neutral: 0,
@@ -70,36 +66,39 @@ class App extends Component {
   };
 
   render() {
-    let isOpen = false;
+    let isShown = false;
     const total = this.countTotalFeedback();
     // show statisctic if total not empty
-    if (total > 0) isOpen = true;
+    if (total > 0) isShown = true;
 
     return (
       <div css={Container}>
         <h1 css={Title}>Please leave feedback</h1>
         <div css={ButtonList}>
-          {/* button component */}
-          <Button type="good" callback={this.countStat} css={positive} />
-          <Button type="neutral" callback={this.countStat} css={neutral} />
-          <Button type="bad" callback={this.countStat} css={negative} />
+          <Button callback={this.countStat} css={positive}>
+            good
+          </Button>
+          <Button callback={this.countStat} css={neutral}>
+            neutral
+          </Button>
+          <Button callback={this.countStat} css={negative}>
+            bad
+          </Button>
         </div>
         <h2>Statistics</h2>
-        {/* ternan condition */}
-        {isOpen ? (
+        {isShown ? (
           <ul>
             {/* li component */}
             <Statisctics obj={this.state} />
-            {/* total */}
             <Total callback={this.countTotalFeedback} />
-            {/* positive percent */}
             <PositiveFeedback callback={this.countPositiveFeedbackPercentage} />
           </ul>
         ) : (
-          <Notification message="No feedback given" />
+          <Notification>No feedback given</Notification>
         )}
       </div>
     );
   }
 }
+
 export default App;

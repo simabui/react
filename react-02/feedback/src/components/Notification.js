@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Notification = ({ message }) => <p>{message}</p>;
+const Notification = ({ children }) => <p>{children}</p>;
 
 Notification.defaultProps = {
-  message: 'placeholder',
+  children: 'placeholder',
 };
 
 Notification.propTypes = {
-  message: PropTypes.string,
+  children: PropTypes.string,
 };
 export default Notification;
