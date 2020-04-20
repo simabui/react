@@ -1,11 +1,8 @@
 import { Component } from 'react';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import Button from './Button';
-import Statisctics from './Statistics';
-import Total from './Total';
-import PositiveFeedback from './PositiveFeedback';
-import Notification from './Notification';
+import Statisctics from './Statistics/Statistics';
+import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
 
 const Title = css`
   text-align: center;
@@ -18,20 +15,13 @@ const Container = css`
   max-width: 1100px;
   margin: 0 auto;
 `;
-const ButtonList = css`
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-`;
-const positive = css`
-  background-color: #3aaa3f;
-`;
-const neutral = css`
-  background-color: #ffbb00;
-`;
-const negative = css`
-  background-color: #ff0000;
-`;
+
+const buttonOptions = [
+  { type: 'good', color: '#3aaa3f' },
+  { type: 'neutral', color: '#ffbb00' },
+  { type: 'bad', color: '#ff0000' },
+];
+
 class App extends Component {
   state = {
     good: 0,
@@ -66,36 +56,24 @@ class App extends Component {
   };
 
   render() {
-    let isShown = false;
     const total = this.countTotalFeedback();
-    // show statisctic if total not empty
-    if (total > 0) isShown = true;
+    const totalPositive = this.countPositiveFeedbackPercentage();
+    const { good, neutral, bad } = this.state;
 
     return (
       <div css={Container}>
         <h1 css={Title}>Please leave feedback</h1>
-        <div css={ButtonList}>
-          <Button callback={this.countStat} css={positive}>
-            good
-          </Button>
-          <Button callback={this.countStat} css={neutral}>
-            neutral
-          </Button>
-          <Button callback={this.countStat} css={negative}>
-            bad
-          </Button>
-        </div>
-        <h2>Statistics</h2>
-        {isShown ? (
-          <ul>
-            {/* li component */}
-            <Statisctics obj={this.state} />
-            <Total callback={this.countTotalFeedback} />
-            <PositiveFeedback callback={this.countPositiveFeedbackPercentage} />
-          </ul>
-        ) : (
-          <Notification>No feedback given</Notification>
-        )}
+        <FeedbackOptions
+          options={buttonOptions}
+          onLeaveFeedback={this.countStat}
+        />
+        <Statisctics
+          good={good}
+          neutral={neutral}
+          bad={bad}
+          total={total}
+          positivePercentage={totalPositive}
+        />
       </div>
     );
   }
