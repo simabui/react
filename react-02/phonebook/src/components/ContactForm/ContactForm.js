@@ -4,7 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { validateAll } from 'indicative/validator';
-import Notification from './Notification';
+import Notification from '../Notification/Notification';
+import Input from './Input';
 
 // css emotion
 const form = css`
@@ -19,20 +20,7 @@ const button = css`
   border-radius: 5px;
   padding: 3px;
 `;
-const label = css`
-  margin-bottom: 10px;
-`;
-const input = css`
-  margin-left: 5px;
-`;
-const inputNUmber = css`
-  &::-webkit-inner-spin-button,
-  ::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  ${input}
-`;
+
 // indicative
 const rules = {
   name: 'required|string',
@@ -118,30 +106,23 @@ export default class ContactForm extends Component {
     const idPhone = uuidv4();
     return (
       <form onSubmit={this.handleSubmit} css={form}>
-        <label htmlFor={idName} css={label}>
-          Name
-          <input
-            type="text"
-            value={name}
-            name="name"
-            onChange={this.handleInput}
-            id={idName}
-            css={input}
-          />
-        </label>
+        <Input
+          id={idName}
+          text="Name"
+          type="text"
+          name="name"
+          value={name}
+          onChange={this.handleInput}
+        />
         {errors && <Notification label={errors.name} />}
-        <label htmlFor={idPhone} css={label}>
-          Number
-          <input
-            type="number"
-            value={number}
-            name="number"
-            onChange={this.handleInput}
-            id={idPhone}
-            css={inputNUmber}
-            min="0"
-          />
-        </label>
+        <Input
+          id={idPhone}
+          text="Number"
+          type="number"
+          name="number"
+          value={number}
+          onChange={this.handleInput}
+        />
         {errors && <Notification label={errors.number} />}
         <button type="submit" css={button}>
           Add contact

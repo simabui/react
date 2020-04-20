@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
-import ContactForm from './ContactForm';
-import ContactList from './ContactList';
-import Filter from './Filter';
+import React, { Component } from 'react';
+import ContactForm from './ContactForm/ContactForm';
+import ContactList from './ContactList/ContactList';
+import Filter from './Filter/Filter';
 
 class App extends Component {
   static propTypes = {};
@@ -59,7 +59,7 @@ class App extends Component {
     const filteredPhoneBook = this.handleFilter(contacts, filter);
 
     return (
-      <Fragment>
+      <>
         <h1>Phonebook</h1>
         <ContactForm
           handleContacts={this.handleContacts}
@@ -71,7 +71,7 @@ class App extends Component {
           data={filteredPhoneBook}
           onDeleteContact={this.deleteContact}
         />
-      </Fragment>
+      </>
     );
   }
 }
