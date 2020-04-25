@@ -1,13 +1,13 @@
 {
-  "main.css": "/friendlist/static/css/main.a59fc81c.chunk.css",
-  "main.js": "/friendlist/static/js/main.e6e39416.chunk.js",
-  "main.js.map": "/friendlist/static/js/main.e6e39416.chunk.js.map",
-  "runtime~main.js": "/friendlist/static/js/runtime~main.a8ff8772.js",
-  "runtime~main.js.map": "/friendlist/static/js/runtime~main.a8ff8772.js.map",
-  "static/js/2.f9d42e77.chunk.js": "/friendlist/static/js/2.f9d42e77.chunk.js",
-  "static/js/2.f9d42e77.chunk.js.map": "/friendlist/static/js/2.f9d42e77.chunk.js.map",
-  "index.html": "/friendlist/index.html",
-  "precache-manifest.4e90852984be609087fb113e985839cf.js": "/friendlist/precache-manifest.4e90852984be609087fb113e985839cf.js",
-  "service-worker.js": "/friendlist/service-worker.js",
-  "static/css/main.a59fc81c.chunk.css.map": "/friendlist/static/css/main.a59fc81c.chunk.css.map"
+  "main.css": "/phonebook/static/css/main.bb5b5c76.chunk.css",
+  "main.js": "/phonebook/static/js/main.d342fa32.chunk.js",
+  "main.js.map": "/phonebook/static/js/main.d342fa32.chunk.js.map",
+  "runtime~main.js": "/phonebook/static/js/runtime~main.11a7b17e.js",
+  "runtime~main.js.map": "/phonebook/static/js/runtime~main.11a7b17e.js.map",
+  "static/js/2.e7e6c311.chunk.js": "/phonebook/static/js/2.e7e6c311.chunk.js",
+  "static/js/2.e7e6c311.chunk.js.map": "/phonebook/static/js/2.e7e6c311.chunk.js.map",
+  "index.html": "/phonebook/index.html",
+  "precache-manifest.9f070fe9f48331237a6945c1ed12e89d.js": "/phonebook/precache-manifest.9f070fe9f48331237a6945c1ed12e89d.js",
+  "service-worker.js": "/phonebook/service-worker.js",
+  "static/css/main.bb5b5c76.chunk.css.map": "/phonebook/static/css/main.bb5b5c76.chunk.css.map"
 }
