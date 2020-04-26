@@ -2,9 +2,9 @@ import { Component, Fragment } from 'react';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import ContactForm from './ContactForm';
-import ContactList from './ContactList';
-import Filter from './Filter';
+import ContactForm from './ContactForm/ContactForm';
+import ContactList from './ContactList/ContactList';
+import Filter from './Filter/Filter';
 import slideTransition from '../transitions/slide.module.css';
 import PopTransition from '../transitions/pop.module.css';
 
