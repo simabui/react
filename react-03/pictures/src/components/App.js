@@ -76,12 +76,14 @@ class App extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { search } = e.currentTarget.elements;
 
+    const { search } = e.target.elements;
+    const { query } = this.state;
     this.setState({ query: search.value });
-    this.reset();
     // new response
-    this.handleRequest(search.value, 1);
+    // this.handleRequest(search.value, 1);
+    this.handleRequest(query, 1);
+    this.reset();
   };
 
   // pagination
