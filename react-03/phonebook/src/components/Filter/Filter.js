@@ -6,10 +6,10 @@ const input = css`
   width: 200px;
   padding: 3px;
 `;
-const Filter = ({ getFIlterValue }) => (
+const Filter = ({ getFIlterValue, value }) => (
   <div>
     <p>Find contacts by name</p>
-    <input type="text" onChange={getFIlterValue} css={input} />
+    <input type="text" onChange={getFIlterValue} css={input} value={value} />
   </div>
 );
 
@@ -17,4 +17,5 @@ export default Filter;
 
 Filter.propTypes = {
   getFIlterValue: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };

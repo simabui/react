@@ -85,7 +85,9 @@ class App extends Component {
           onUnique={this.handleUniqueName}
         />
         <h2>Contacts</h2>
-        {contacts.length > 0 && <Filter getFIlterValue={this.getFIlterValue} />}
+        {contacts.length > 0 && (
+          <Filter getFIlterValue={this.getFIlterValue} value={filter} />
+        )}
         <ContactList
           data={filteredPhoneBook}
           onDeleteContact={this.deleteContact}
