@@ -34,9 +34,7 @@ export default class MovieSearch extends Component {
     }
   }
 
-  handleInput = async e => {
-    e.preventDefault();
-    const { value } = e.currentTarget.elements.search;
+  handleInput = async value => {
     const { history, location } = this.props;
 
     // change url string

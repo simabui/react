@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import { useState } from 'react';
 import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
 
@@ -24,8 +25,20 @@ const formInput = css`
 `;
 
 const InputForm = ({ onSearch }) => {
+  const [value, setValue] = useState('');
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    onSearch(value);
+  };
+
+  const handleInput = e => {
+    const { value: movie } = e.target;
+    setValue(movie);
+  };
+
   return (
-    <form onSubmit={onSearch} css={form}>
+    <form onSubmit={handleSubmit} css={form}>
       <input
         type="text"
         autoComplete="off"
@@ -33,6 +46,8 @@ const InputForm = ({ onSearch }) => {
         name="search"
         required
         css={formInput}
+        onChange={handleInput}
+        value={value}
       />
       <button type="submit" css={formButton}>
         search
