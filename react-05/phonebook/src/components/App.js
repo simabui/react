@@ -101,7 +101,7 @@ class App extends Component {
         <TransitionGroup>
           {contacts.length > 1 && (
             <CSSTransition timeout={300} classNames={PopTransition}>
-              <Filter getFIlterValue={this.getFIlterValue} />
+              <Filter getFIlterValue={this.getFIlterValue} value={filter} />
             </CSSTransition>
           )}
         </TransitionGroup>
