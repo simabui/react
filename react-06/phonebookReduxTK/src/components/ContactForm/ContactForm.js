@@ -5,9 +5,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { jsx, css } from '@emotion/core';
 import { validateAll } from 'indicative/validator';
 import { CSSTransition } from 'react-transition-group';
-import Notification from './Notification';
+import Notification from '../Notification/Notification';
 import ErrorDuplicate from './ErrorDuplicate';
-import SlideTransition from '../transitions/errorSlide.module.css';
+import Input from './Input';
+import SlideTransition from '../../transitions/errorSlide.module.css';
 
 // css emotion
 const form = css`
@@ -30,26 +31,7 @@ const button = css`
   padding: 10px 0;
   font-weight: 700;
 `;
-const label = css`
-  margin-bottom: 10px;
-  padding: 5px;
-`;
-const input = css`
-  width: 100%;
-  padding: 10px 0 10px 5px;
-  border-radius: 5px;
-  border: 1px solid #dedede;
-  margin-top: 5px;
-  font-size: 16px;
-`;
-const inputNUmber = css`
-  &::-webkit-inner-spin-button,
-  ::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  ${input}
-`;
+
 // indicative
 const rules = {
   name: 'required|string',
@@ -146,30 +128,23 @@ export default class ContactForm extends Component {
 
     return (
       <form onSubmit={this.handleSubmit} css={form}>
-        <label htmlFor={idName} css={label}>
-          Name
-          <input
-            type="text"
-            value={name}
-            name="name"
-            onChange={this.handleInput}
-            id={idName}
-            css={input}
-          />
-        </label>
+        <Input
+          id={idName}
+          text="Name"
+          type="text"
+          name="name"
+          value={name}
+          onChange={this.handleInput}
+        />
         {errors && <Notification label={errors.name} />}
-        <label htmlFor={idPhone} css={label}>
-          Number
-          <input
-            type="number"
-            value={number}
-            name="number"
-            onChange={this.handleInput}
-            id={idPhone}
-            css={inputNUmber}
-            min="0"
-          />
-        </label>
+        <Input
+          id={idPhone}
+          text="Number"
+          type="number"
+          name="number"
+          value={number}
+          onChange={this.handleInput}
+        />
         {errors && <Notification label={errors.number} />}
         <button type="submit" css={button}>
           Add contact
