@@ -6,9 +6,20 @@ function getParams(props) {
   return props.match.params.id;
 }
 
+function getter(movie) {
+  return {
+    release_date: movie.release_date,
+    original_title: movie.original_title,
+    genres: movie.genres,
+    poster_path: movie.poster_path,
+    overview: movie.overview,
+    id: movie.id,
+  };
+}
+
 export default class Movie extends Component {
   state = {
-    movieDetails: null,
+    movie: null,
     error: null,
   };
 
@@ -16,18 +27,18 @@ export default class Movie extends Component {
     // get id from path and send request
     const id = getParams(this.props);
     try {
-      const movieDetails = await MOVIEAPI.getMovie(id);
-      this.setState({ movieDetails: movieDetails.data });
+      const response = await MOVIEAPI.getMovie(id);
+      this.setState({ movie: getter(response.data) });
     } catch (err) {
       this.setState({ error: err.response.data.status_message });
     }
   }
 
   render() {
-    const { movieDetails, error } = this.state;
+    const { movie, error } = this.state;
     return (
       <Fragment>
-        {movieDetails && <Movieitem {...movieDetails} />}
+        {movie && <Movieitem movie={movie} />}
         {error && <p>error</p>}
       </Fragment>
     );

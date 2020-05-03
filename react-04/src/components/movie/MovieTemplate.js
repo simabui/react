@@ -28,16 +28,9 @@ const button = css`
   border-radius: 5px;
 `;
 
-const MovieTemplate = ({
-  release_date,
-  original_title,
-  genres,
-  poster_path,
-  overview,
-  onHome,
-}) => {
+const MovieTemplate = ({ template, onHome }) => {
   // get year from string
-  const year = release_date.match(/([12]\d{3})/);
+  const year = template.release_date.match(/([12]\d{3})/);
   return (
     <Fragment>
       {/*  render movie details */}
@@ -46,19 +39,19 @@ const MovieTemplate = ({
       </button>
       <div css={movie}>
         <img
-          src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+          src={`https://image.tmdb.org/t/p/w500${template.poster_path}`}
           alt="poster"
           css={movieImage}
         />
         <div css={movieDetails}>
           <h1>
-            {original_title}({year[0]})
+            {template.original_title}({year[0]})
           </h1>
           <h2>Overview</h2>
-          <p>{overview}</p>
+          <p>{template.overview}</p>
           <h2>Genres</h2>
           <ul>
-            {genres.map(genre => (
+            {template.genres.map(genre => (
               <li key={genre.id}>{genre.name}</li>
             ))}
           </ul>
@@ -69,11 +62,13 @@ const MovieTemplate = ({
 };
 
 MovieTemplate.propTypes = {
-  original_title: PropTypes.string.isRequired,
-  genres: PropTypes.arrayOf(PropTypes.object).isRequired,
-  poster_path: PropTypes.string.isRequired,
-  overview: PropTypes.string.isRequired,
-  release_date: PropTypes.string.isRequired,
+  template: PropTypes.shape({
+    original_title: PropTypes.string.isRequired,
+    genres: PropTypes.arrayOf(PropTypes.object).isRequired,
+    poster_path: PropTypes.string.isRequired,
+    overview: PropTypes.string.isRequired,
+    release_date: PropTypes.string.isRequired,
+  }).isRequired,
   onHome: PropTypes.func.isRequired,
 };
 

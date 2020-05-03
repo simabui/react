@@ -6,25 +6,27 @@ import placeholder from '../../../images/person-gray.jpg';
 const actors = css`
   padding: 0;
   list-style-type: none;
+  display: flex;
+  overflow-x: auto;
 `;
 
 const image = css`
-  width: 70px;
-  height: auto;
+  width: 100%;
+  height: 260px;
 `;
 
-const actorName = css`
-  font-weight: 700;
+const actorCharacte = css`
+  display: block;
 `;
 
 const actorsList = css`
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
+  display: block;
+  margin-left: 20px;
+  width: 168px;
 `;
 
 const actorText = css`
-  margin-left: 10px;
+  text-align: center;
 `;
 
 const CastTemplate = ({ cast }) => (
@@ -42,7 +44,8 @@ const CastTemplate = ({ cast }) => (
             css={image}
           ></img>
           <p css={actorText}>
-            {actor.character} / <span css={actorName}>{actor.name}</span>
+            <b>{actor.name}</b> as
+            <span css={actorCharacte}>{actor.character}</span>
           </p>
         </div>
       </li>

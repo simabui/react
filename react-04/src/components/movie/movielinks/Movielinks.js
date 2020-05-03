@@ -11,7 +11,7 @@ const Movielinks = ({ match, location }) => (
         to={{
           pathname: `${match.url}/cast`,
           // custom state
-          state: { from: location },
+          state: { ...location.state },
         }}
         className={styles.link}
         activeClassName={styles['active-link']}
@@ -24,7 +24,7 @@ const Movielinks = ({ match, location }) => (
         to={{
           pathname: `${match.url}/reviews`,
           // custom state
-          state: { from: location },
+          state: { ...location.state },
         }}
         className={styles.link}
         activeClassName={styles['active-link']}
