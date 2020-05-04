@@ -1,0 +1,85 @@
+.movie {
+  display: flex;
+  list-style-type: none;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  text-align: center;
+  padding: 0;
+}
+
+.movie__list {
+  display: block;
+  width: 300px;
+  position: relative;
+}
+
+.movie__list:nth-child(n + 4) {
+  margin-top: 20px;
+}
+
+.movie__img {
+  max-width: 100%;
+}
+.movie__link {
+  font-weight: 700;
+  color: #000;
+  text-decoration: none;
+}
+
+figure {
+  position: relative;
+  margin: 0;
+}
+
+figcaption {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.728);
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+
+figure:hover figcaption {
+  opacity: 1;
+}
+
+figure:hover .movie__text {
+  transform: scale(1);
+}
+
+.movie__text {
+  font-weight: 700;
+  color: #fff;
+  transform: scale(0.9);
+  transition: transform 0.2s linear;
+}
+
+.movie__text h2 {
+  margin: 0;
+}
+
+figcaption span {
+  display: block;
+}
+
+.movie__star {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.movie__star::before {
+  content: '';
+  display: block;
+  background-image: url('../../images/star-active.svg');
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}

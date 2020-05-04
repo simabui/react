@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { Fragment } from 'react';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
