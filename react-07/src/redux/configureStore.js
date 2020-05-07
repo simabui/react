@@ -13,4 +13,6 @@ function configureStore(reducers) {
   return createStore(reducers, composeWithDevTools(enhancer));
 }
 
-export default configureStore(rootReducer);
+const store = configureStore(rootReducer);
+
+export default store;

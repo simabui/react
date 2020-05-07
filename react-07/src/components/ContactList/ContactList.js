@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import slideTransition from '../transitions/slide.module.css';
+import slideTransition from '../../transitions/slide.module.css';
 
 const item = css`
   display: flex;

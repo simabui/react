@@ -1,6 +1,5 @@
-/* eslint-disable */
 import axios from 'axios';
-import * as actions from '../phonebook/phonebookActions';
+import * as actions from './phonebookActions';
 
 axios.defaults.baseURL = 'http://localhost:8086';
 

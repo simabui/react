@@ -3,19 +3,11 @@ import PropTypes from 'prop-types';
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { connect } from 'react-redux';
-import ContactForm from './ContactForm';
-import ContactList from './ContactList';
-import Filter from './Filter';
+import ContactForm from './ContactForm/ContactForm';
+import ContactList from './ContactList/ContactList';
+import Filter from './Filter/Filter';
 import slideTransition from '../transitions/slide.module.css';
 import PopTransition from '../transitions/pop.module.css';
-import * as ACTIONS from '../redux/phonebook/phonebookActions';
-import {
-  fetchData,
-  putData,
-  deleteData,
-} from '../redux/phonebook/phonebookOperations';
-import { getContacts, getFilterValue } from '../redux/phonebook/phoneSelectors';
 
 const title = css`
   color: #3944a8;
@@ -97,7 +89,7 @@ class App extends Component {
         <TransitionGroup>
           {contacts && contacts.length > 1 ? (
             <CSSTransition timeout={300} classNames={PopTransition}>
-              <Filter getFIlterValue={this.getFIlterValue} />
+              <Filter getFIlterValue={this.getFIlterValue} value={filter} />
             </CSSTransition>
           ) : null}
         </TransitionGroup>
@@ -110,21 +102,5 @@ class App extends Component {
     );
   }
 }
-// redux
-const mapStateToProps = state => {
-  return {
-    contacts: getContacts(state),
-    filter: getFilterValue(state),
-  };
-};
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchContacts: () => dispatch(fetchData()),
-    putContact: contact => dispatch(putData(contact)),
-    deleteUser: id => dispatch(deleteData(id)),
-    inputFilter: input => dispatch(ACTIONS.filterCollection(input)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
