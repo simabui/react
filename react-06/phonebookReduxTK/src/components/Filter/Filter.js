@@ -1,25 +1,48 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import PopTransition from '../../transitions/pop.module.css';
+import Input from '../common/Input';
 
-const input = css`
-  width: 100%;
-  padding: 10px 0 10px 5px;
-  border-radius: 5px;
-  border: 1px solid #dedede;
-  margin-top: 5px;
-  font-size: 16px;
-`;
-const Filter = ({ getFIlterValue, value }) => (
-  <div>
-    <p>Find contacts by name</p>
-    <input type="text" onChange={getFIlterValue} css={input} value={value} />
-  </div>
-);
+const Filter = ({ inputFilter, filter, contacts }) => {
+  const getFIlterValue = ({ target }) => {
+    const { value } = target;
+    // redux
+    inputFilter(value);
+  };
+
+  return (
+    <>
+      <TransitionGroup>
+        {contacts.length > 1 && (
+          <CSSTransition timeout={300} classNames={PopTransition} unmountOnExit>
+            <div>
+              <Input
+                onChange={getFIlterValue}
+                value={filter}
+                type="text"
+                text="Find contacts by name"
+                id="filter"
+                name="filter"
+              />
+            </div>
+          </CSSTransition>
+        )}
+      </TransitionGroup>
+    </>
+  );
+};
 
 export default Filter;
 
 Filter.propTypes = {
-  getFIlterValue: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  inputFilter: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      number: PropTypes.string,
+      name: PropTypes.strings,
+    }),
+  ).isRequired,
 };

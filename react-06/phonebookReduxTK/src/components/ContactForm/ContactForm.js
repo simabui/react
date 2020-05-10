@@ -7,7 +7,7 @@ import { validateAll } from 'indicative/validator';
 import { CSSTransition } from 'react-transition-group';
 import Notification from '../Notification/Notification';
 import ErrorDuplicate from './ErrorDuplicate';
-import Input from './Input';
+import Input from '../common/Input';
 import SlideTransition from '../../transitions/errorSlide.module.css';
 
 // css emotion
@@ -45,8 +45,14 @@ const messages = {
 
 export default class ContactForm extends Component {
   static propTypes = {
-    handleContacts: PropTypes.func.isRequired,
-    onDuplicate: PropTypes.func.isRequired,
+    updateCollection: PropTypes.func.isRequired,
+    contacts: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        number: PropTypes.string,
+        name: PropTypes.strings,
+      }),
+    ).isRequired,
   };
 
   state = {
@@ -56,14 +62,20 @@ export default class ContactForm extends Component {
     isDuplicate: false,
   };
 
+  handleDupName = name => {
+    const { contacts } = this.props;
+    const isUnique = contacts.some(contact => contact.name === name);
+    return isUnique;
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     // recieve state name
     const { name, number } = this.state;
     // update parent state
-    const { handleContacts, onDuplicate } = this.props;
+    const { updateCollection } = this.props;
     // validate unique name
-    if (onDuplicate(name)) {
+    if (this.handleDupName(name)) {
       // set animation
       this.setState({ isDuplicate: true });
       setTimeout(this.exitAnimation, 3000);
@@ -79,7 +91,7 @@ export default class ContactForm extends Component {
     validateAll(data, rules, messages)
       .then(d => {
         // render if validated
-        handleContacts([
+        updateCollection([
           {
             ...d,
             id,

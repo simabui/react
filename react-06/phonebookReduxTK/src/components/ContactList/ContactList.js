@@ -40,39 +40,41 @@ const lists = css`
   list-style-type: none;
   padding: 0;
 `;
-const ContactList = ({ data, onDeleteContact }) => (
-  <TransitionGroup component="ul" css={lists}>
-    {data.map(contact => (
-      <CSSTransition
-        key={contact.id}
-        timeout={500}
-        classNames={slideTransition}
-      >
-        <li css={list}>
-          <div css={item}>
-            <p css={itemName}>{contact.name}</p>
-            <p css={itemNumber}>{contact.number}</p>
-            <button
-              type="button"
-              onClick={() => onDeleteContact(contact.id)}
-              css={button}
-            >
-              ✕
-            </button>
-          </div>
-        </li>
-      </CSSTransition>
-    ))}
-  </TransitionGroup>
-);
+const ContactList = ({ contacts, deleteUser }) => {
+  return (
+    <TransitionGroup component="ul" css={lists}>
+      {contacts.map(contact => (
+        <CSSTransition
+          key={contact.id}
+          timeout={500}
+          classNames={slideTransition}
+        >
+          <li css={list}>
+            <div css={item}>
+              <p css={itemName}>{contact.name}</p>
+              <p css={itemNumber}>{contact.number}</p>
+              <button
+                type="button"
+                onClick={() => deleteUser(contact.id)}
+                css={button}
+              >
+                ✕
+              </button>
+            </div>
+          </li>
+        </CSSTransition>
+      ))}
+    </TransitionGroup>
+  );
+};
 
 ContactList.defaultProps = {
   data: null,
 };
 
 ContactList.propTypes = {
-  onDeleteContact: PropTypes.func.isRequired,
-  data: PropTypes.arrayOf(
+  deleteUser: PropTypes.func.isRequired,
+  contacts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
