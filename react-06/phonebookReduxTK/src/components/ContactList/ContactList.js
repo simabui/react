@@ -2,34 +2,9 @@
 import { jsx, css } from '@emotion/core';
 import PropTypes from 'prop-types';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import Contact from '../Contact/ContactContainer';
 import slideTransition from '../../transitions/slide.module.css';
 
-const item = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 8px;
-`;
-
-const itemName = css`
-  flex-grow: 2;
-`;
-const itemNumber = css`
-  flex-grow: 1;
-`;
-
-const button = css`
-  padding: 4px;
-  max-width: 40px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #fff;
-  border-radius: 5px;
-  flex-grow: 1;
-  background-color: #ff0000;
-  color: #fff;
-  font-weight: 700;
-`;
 const list = css`
   margin-top: 10px;
   border: 1px solid #dedede;
@@ -40,7 +15,7 @@ const lists = css`
   list-style-type: none;
   padding: 0;
 `;
-const ContactList = ({ contacts, deleteUser }) => {
+const ContactList = ({ contacts }) => {
   return (
     <TransitionGroup component="ul" css={lists}>
       {contacts.map(contact => (
@@ -50,17 +25,7 @@ const ContactList = ({ contacts, deleteUser }) => {
           classNames={slideTransition}
         >
           <li css={list}>
-            <div css={item}>
-              <p css={itemName}>{contact.name}</p>
-              <p css={itemNumber}>{contact.number}</p>
-              <button
-                type="button"
-                onClick={() => deleteUser(contact.id)}
-                css={button}
-              >
-                ✕
-              </button>
-            </div>
+            <Contact contact={contact} />
           </li>
         </CSSTransition>
       ))}
@@ -68,19 +33,8 @@ const ContactList = ({ contacts, deleteUser }) => {
   );
 };
 
-ContactList.defaultProps = {
-  data: null,
-};
-
 ContactList.propTypes = {
-  deleteUser: PropTypes.func.isRequired,
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }),
-  ),
+  contacts: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default ContactList;
