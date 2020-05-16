@@ -1,14 +1,14 @@
 export const TYPE = {
-  getStart: 'COLLECTION_GET_START',
-  getSuccess: 'COLLECTION_GET_SUCCESS',
-  getFail: 'COLLECTION_GET_FAIL',
-  updateStart: 'COLLECTION_UPDATE_START',
-  updateSuccess: 'COLLECTION_UPDATE_SUCCESS',
-  updateFail: 'COLLECTION_UPDATE_FAIL',
-  filter: 'FILTER_COLLECTION',
-  deleteStart: 'DELETE_USER_START',
-  deleteSuccess: 'DELETE_USER_SUCCESS',
-  deleteFail: 'DELETE_USER_FAIL',
+  getStart: 'phonebook/CONTACTS_GET_START',
+  getSuccess: 'phonebook/CONTACTS_GET_SUCCESS',
+  getFail: 'phonebook/CONTACTS_GET_FAIL',
+  updateStart: 'phonebook/CONTACTS_UPDATE_START',
+  updateSuccess: 'phonebook/CONTACTS_UPDATE_SUCCESS',
+  updateFail: 'phonebook/CONTACTS_UPDATE_FAIL',
+  filter: 'phonebook/FILTER_CONTACTS',
+  deleteStart: 'phonebook/DELETE_USER_START',
+  deleteSuccess: 'phonebook/DELETE_USER_SUCCESS',
+  deleteFail: 'phonebook/DELETE_USER_FAIL',
 };
 
 /* GET */

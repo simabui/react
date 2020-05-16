@@ -8,7 +8,7 @@ import { CSSTransition } from 'react-transition-group';
 import Notification from '../Notification/Notification';
 import ErrorDuplicate from './ErrorDuplicate';
 import SlideTransition from '../../transitions/errorSlide.module.css';
-import Input from './Input';
+import Input from '../common/Input';
 
 // css emotion
 const form = css`
@@ -45,8 +45,14 @@ const messages = {
 
 export default class ContactForm extends Component {
   static propTypes = {
-    handleContacts: PropTypes.func.isRequired,
-    onDuplicate: PropTypes.func.isRequired,
+    putContact: PropTypes.func.isRequired,
+    contacts: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        number: PropTypes.string,
+        name: PropTypes.strings,
+      }),
+    ).isRequired,
   };
 
   state = {
@@ -61,9 +67,9 @@ export default class ContactForm extends Component {
     // recieve state name
     const { name, number } = this.state;
     // update parent state
-    const { handleContacts, onDuplicate } = this.props;
+    const { putContact } = this.props;
     // validate unique name
-    if (onDuplicate(name)) {
+    if (this.handleDupName(name)) {
       // set animation
       this.setState({ isDuplicate: true });
       setTimeout(this.exitAnimation, 3000);
@@ -77,7 +83,7 @@ export default class ContactForm extends Component {
     validateAll(data, rules, messages)
       .then(d => {
         // render if validated
-        handleContacts({
+        putContact({
           ...d,
         });
         // reset
@@ -105,6 +111,12 @@ export default class ContactForm extends Component {
     this.setState({
       [name]: value,
     });
+  };
+
+  handleDupName = name => {
+    const { contacts } = this.props;
+    const isUnique = contacts.some(contact => contact.name === name);
+    return isUnique;
   };
 
   reset() {
