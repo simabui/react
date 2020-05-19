@@ -29,15 +29,19 @@ const button = css`
   font-weight: 700;
 `;
 
-const Contact = ({ contact, deleteUser }) => (
-  <div css={item}>
-    <p css={itemName}>{contact.name}</p>
-    <p css={itemNumber}>{contact.number}</p>
-    <button type="button" onClick={() => deleteUser(contact.id)} css={button}>
-      ✕
-    </button>
-  </div>
-);
+const Contact = ({ contact, deleteUser }) => {
+  const del = () => deleteUser(contact.id);
+
+  return (
+    <div css={item}>
+      <p css={itemName}>{contact.name}</p>
+      <p css={itemNumber}>{contact.number}</p>
+      <button type="button" onClick={del} css={button}>
+        ✕
+      </button>
+    </div>
+  );
+};
 
 Contact.propTypes = {
   deleteUser: PropTypes.func.isRequired,
