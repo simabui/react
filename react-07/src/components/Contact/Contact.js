@@ -1,4 +1,5 @@
 /** @jsx jsx */
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { jsx, css } from '@emotion/core';
 
@@ -36,16 +37,14 @@ const list = css`
 `;
 
 const Contact = ({ contact, deleContact }) => {
+  const del = useCallback(() => deleContact(contact.id), [contact.id]);
+
   return (
     <li css={list}>
       <div css={item}>
         <p css={itemName}>{contact.name}</p>
         <p css={itemNumber}>{contact.number}</p>
-        <button
-          type="button"
-          onClick={() => deleContact(contact.id)}
-          css={button}
-        >
+        <button type="button" onClick={del} css={button}>
           ✕
         </button>
       </div>
