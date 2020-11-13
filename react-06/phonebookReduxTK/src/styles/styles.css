@@ -26,3 +26,15 @@ p {
 h1 {
   color: #3944a8;
 }
+
+@media screen and (max-width: 560px) {
+  .container {
+    padding: 0px 10px;
+  }
+  h1 {
+    text-align: center;
+  }
+  h2 {
+    text-align: center;
+  }
+}
