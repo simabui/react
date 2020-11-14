@@ -1,19 +1,15 @@
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import React from 'react';
 import PropTypes from 'prop-types';
-
-const author = css`
-  font-weight: 700;
-`;
+import './ReviewTemplate.scss';
 
 const ReviewTemplate = ({ reviews }) => (
-  <ul>
+  <ul className="review">
     {reviews.length > 0 ? (
       reviews.map(r => (
         <li key={r.id}>
           <div>
-            <p css={author}>{r.author}</p>
-            <p>{r.content}</p>
+            <p className="reviw__author">{r.author}</p>
+            <p className="review__text">{r.content}</p>
           </div>
         </li>
       ))

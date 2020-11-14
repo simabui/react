@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import MovieListTemp from './MovieListTemp';
-import './Movielist.css';
+import './Movielist.scss';
 
 const Movieslist = ({ movies, location }) => (
-  <ul className="movie">
+  <ul className="movies">
     {movies.map(movie => (
-      <li key={movie.id} className="movie__list">
+      <li key={movie.id} className="movies__list">
         <div>
           <Link
             to={{
@@ -15,7 +15,7 @@ const Movieslist = ({ movies, location }) => (
               // custom state
               state: { from: location },
             }}
-            className="movie__link"
+            className="movies__link"
           >
             <MovieListTemp
               title={movie.original_title ? movie.original_title : movie.name}

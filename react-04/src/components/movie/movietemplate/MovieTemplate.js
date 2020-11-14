@@ -1,53 +1,32 @@
-import { Fragment } from 'react';
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import React from 'react';
 import PropTypes from 'prop-types';
-
-const movie = css`
-  display: flex;
-  align-items: flex-start;
-`;
-
-const movieDetails = css`
-  margin-left: 40px;
-  max-width: 650px;
-`;
-
-const movieImage = css`
-  height: 500px;
-`;
-
-const button = css`
-  margin-bottom: 10px;
-  cursor: pointer;
-  padding: 3px 10px;
-  background-color: #fff;
-  font-weight: 700;
-  border: 1px solid #d2cfcf;
-  border-radius: 5px;
-`;
+import './movieTemplate.scss';
 
 const MovieTemplate = ({ template, onHome }) => {
   // get year from string
   const year = template.release_date.match(/([12]\d{3})/);
   return (
-    <Fragment>
+    <>
       {/*  render movie details */}
-      <button type="button" onClick={onHome} css={button}>
+      <button type="button" onClick={onHome} className="button">
         ← Back
       </button>
-      <div css={movie}>
+      <div className="movie">
         <img
-          src={`https://image.tmdb.org/t/p/w500${template.poster_path}`}
+          src={
+            template.poster_path
+              ? `https://image.tmdb.org/t/p/w500${template.poster_path}`
+              : '/images/movie-placeholder.svg'
+          }
           alt="poster"
-          css={movieImage}
+          className="movieImage"
         />
-        <div css={movieDetails}>
+        <div className="movieDetails">
           <h1>
             {template.original_title}({year[0]})
           </h1>
           <h2>Overview</h2>
-          <p>{template.overview}</p>
+          {template.overview ? <p>{template.overview}</p> : <p>No Overview</p>}
           <h2>Genres</h2>
           <ul>
             {template.genres.map(genre => (
@@ -56,7 +35,7 @@ const MovieTemplate = ({ template, onHome }) => {
           </ul>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 
@@ -64,7 +43,7 @@ MovieTemplate.propTypes = {
   template: PropTypes.shape({
     original_title: PropTypes.string.isRequired,
     genres: PropTypes.arrayOf(PropTypes.object).isRequired,
-    poster_path: PropTypes.string.isRequired,
+    poster_path: PropTypes.string,
     overview: PropTypes.string.isRequired,
     release_date: PropTypes.string.isRequired,
   }).isRequired,

@@ -1,28 +1,6 @@
-/** @jsx jsx */
-import { useState } from 'react';
-import { jsx, css } from '@emotion/core';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
-const form = css`
-  display: flex;
-  align-items: center;
-`;
-
-const formButton = css`
-  font-weight: 700;
-  cursor: pointer;
-  margin-left: 10px;
-  background-color: #fff;
-  border: 1px solid #d2cfcf;
-  border-radius: 5px;
-`;
-const formInput = css`
-  width: 200px;
-  padding: 1px 5px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #d2cfcf;
-`;
+import './InputForm.scss';
 
 const InputForm = ({ onSearch }) => {
   const [value, setValue] = useState('');
@@ -38,18 +16,18 @@ const InputForm = ({ onSearch }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} css={form}>
+    <form onSubmit={handleSubmit} className="form">
       <input
         type="text"
         autoComplete="off"
         placeholder="Search movie"
         name="search"
         required
-        css={formInput}
+        className="formInput"
         onChange={handleInput}
         value={value}
       />
-      <button type="submit" css={formButton}>
+      <button type="submit" className="formButton">
         search
       </button>
     </form>

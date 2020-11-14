@@ -8,15 +8,21 @@ export default function MovieListTemp({ title, poster, year, rating }) {
     <>
       <figure>
         <img
-          src={`https://image.tmdb.org/t/p/w500${poster}`}
+          src={
+            poster
+              ? `https://image.tmdb.org/t/p/w500${poster}`
+              : '/images/movie-placeholder.svg'
+          }
           alt="poster"
-          className="movie__img"
+          className="movies__img"
         />
         <figcaption>
-          <div className="movie__text">
-            <h2>{title}</h2>
-            <span>{formattedYear}</span>
-            <span className="movie__star">{rating}</span>
+          <div className="movies__text">
+            <div className="movies__desc">
+              <h2>{title}</h2>
+              <span>{formattedYear}</span>
+            </div>
+            <span className="movies__star">{rating}</span>
           </div>
         </figcaption>
       </figure>

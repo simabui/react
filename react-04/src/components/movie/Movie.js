@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Movieitem from './Movieitem';
 import * as MOVIEAPI from '../../services/services';
 
@@ -37,10 +37,10 @@ export default class Movie extends Component {
   render() {
     const { movie, error } = this.state;
     return (
-      <Fragment>
+      <>
         {movie && <Movieitem movie={movie} />}
         {error && <p>error</p>}
-      </Fragment>
+      </>
     );
   }
 }

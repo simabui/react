@@ -1,0 +1,16 @@
+@import '../../../styles/smart-grid.scss';
+
+.review {
+  @include xs(padding-left, 10px);
+
+  &__author {
+    font-weight: 700;
+  }
+  &__text {
+    line-height: 1.2;
+    @include xs-block() {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+  }
+}

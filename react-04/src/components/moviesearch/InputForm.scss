@@ -1,0 +1,32 @@
+@import '../../styles/smart-grid.scss';
+
+.form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  @include sm(justify-content, center);
+}
+
+.formButton {
+  font-weight: 700;
+  cursor: pointer;
+  margin-left: 10px;
+  background-color: #fff;
+  border: 1px solid #d2cfcf;
+  border-radius: 5px;
+  @include xs-block() {
+    font-size: 13px;
+    font-weight: 400;
+  }
+}
+
+.formInput {
+  width: 200px;
+  padding: 3px 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #d2cfcf;
+  @include xs-block() {
+    font-size: 13px;
+  }
+}

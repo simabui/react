@@ -1,0 +1,58 @@
+@import '../../../styles/smart-grid.scss';
+
+.movie {
+  display: flex;
+  align-items: flex-start;
+
+  @include xs-block() {
+    @include row-flex();
+
+    h1 {
+      font-size: 20px;
+    }
+    h2 {
+      font-size: 16px;
+    }
+    p {
+      font-size: 13px;
+    }
+  }
+}
+
+.movieDetails {
+  margin-left: 40px;
+  max-width: 650px;
+  @include xs(margin-left, 0);
+  @include sm-block() {
+    margin-left: 10px;
+
+    h1 {
+      font-size: 25px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+  }
+
+  li {
+    @include xs(font-size, 13px);
+  }
+}
+
+.movieImage {
+  @include xs(height, 300px);
+  @include sm(height, 400px);
+  @include xs(margin, 0 auto);
+  height: 500px;
+}
+
+.button {
+  margin-bottom: 10px;
+  cursor: pointer;
+  padding: 3px 10px;
+  background-color: #fff;
+  font-weight: 700;
+  border: 1px solid #d2cfcf;
+  border-radius: 5px;
+}

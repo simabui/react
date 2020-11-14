@@ -1,0 +1,154 @@
+@import '../../styles/smart-grid.scss';
+
+.movies {
+  @include row-flex();
+  list-style-type: none;
+  padding: 0 0 10px 0;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  &__list {
+    @include col();
+    @include size(3);
+    @include size-md(4);
+    @include size-sm(6);
+
+    &:nth-child(n + 5) {
+      margin-top: 20px;
+    }
+    @include md-block() {
+      &:nth-child(n + 4) {
+        margin-top: 20px;
+      }
+    }
+
+    @include sm-block() {
+      &:nth-child(n + 3) {
+        margin-top: 20px;
+      }
+    }
+  }
+
+  &__img {
+    max-width: 100%;
+  }
+  &__link {
+    font-weight: 700;
+    color: #000;
+    text-decoration: none;
+  }
+
+  &__text {
+    font-weight: 700;
+    color: #fff;
+    transform: scale(0.9);
+    transition: transform 0.2s linear;
+
+    @include sm-block() {
+      color: #000;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      width: 100%;
+      transform: scale(1);
+    }
+
+    @include xs(font-size, 13px);
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  &__desc {
+    text-align: center;
+    @include sm-block() {
+      font-size: 13px;
+
+      h2 {
+        font-size: 15px;
+      }
+
+      span {
+        font-weight: 400;
+      }
+    }
+    @include xs-block() {
+      h2 {
+        font-size: 13px;
+      }
+    }
+  }
+
+  &__star {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    font-weight: 700;
+    @include sm(margin-top, 0);
+
+    &::before {
+      content: '';
+      display: block;
+      background-image: url('/images/star-active.svg');
+      background-size: cover;
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+
+      @include sm-block() {
+        width: 20px;
+        height: 20px;
+        margin-right: 3px;
+      }
+      @include xs-block() {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+}
+
+figure {
+  position: relative;
+  margin: 0;
+
+  &:hover {
+    figcaption {
+      opacity: 1;
+    }
+  }
+
+  &:hover {
+    .movie__text {
+      transform: scale(1);
+    }
+  }
+}
+
+figcaption {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.728);
+  opacity: 0;
+  transition: opacity 0.2s linear;
+
+  @include sm-block() {
+    position: relative;
+    opacity: 1;
+    background-color: transparent;
+    text-align: center;
+    padding-top: 5px;
+  }
+  span {
+    display: block;
+  }
+}

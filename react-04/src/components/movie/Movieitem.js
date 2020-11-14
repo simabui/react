@@ -3,7 +3,7 @@ import React, { Fragment, Component, lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import Movielinks from './movielinks/Movielinks';
-import MovieTemplate from './MovieTemplate';
+import MovieTemplate from './movietemplate/MovieTemplate';
 
 // REACT lazy
 const AsyncCast = lazy(() =>

@@ -4,7 +4,7 @@
   justify-content: space-around;
   padding: 0;
   text-decoration: none;
-  width: 300px;
+  max-width: 300px;
 }
 
 .link {
